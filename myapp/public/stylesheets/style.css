@@ -1,8 +1,37 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #ccc;
 }
 
-a {
-  color: #00B7FF;
+.editor-container {
+	width: 100%;
+	max-width: 700px;
+	height: 500px;
+	border:1px solid red;
+	margin: 0 auto;
+}
+
+.template-overlay-controls {
+	box-sizing: border-box;
+	width: 20%;
+	height: 100%;
+	border:1px solid blue;
+	float: left;
+}
+
+.template-video-controls {
+	box-sizing: border-box;
+	width: 20%;
+	height: 100%;
+	border:1px solid blue;
+	float: right;
+}
+
+.canvas-container {
+	box-sizing: border-box;
+	float: left;
+	width: 60%;
+	height: 100%;
+	border:1px solid green;
 }
