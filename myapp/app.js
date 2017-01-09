@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/*
 var mysql = require('mysql');
 var moment = require('moment');
 
@@ -41,7 +42,7 @@ var query = connection.query('SELECT * from user_entries', function(err, result)
     console.log(query.sql);
     connection.end();
 });
-
+*/
 
 // Routes
 app.use('/', require('./routes/index'));
