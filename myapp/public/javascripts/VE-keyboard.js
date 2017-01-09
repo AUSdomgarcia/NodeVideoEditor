@@ -1,17 +1,12 @@
 var VE = window.VE || {};
 
-VE.Keyboard = function Keyboard() {
+VE.KeyInputs = function KeyInputs() {
     var scope = this;
-
-    this.hashtagInput = $('#hashtagInput');
-    this.nameInput = $('#nameInput');
-
-    this.hashtagInput.on("change paste keyup", function(evt) {
-        console.log($(this).val());
-    });
+    this.hashtag = $('#hashtagInput');
+    this.name = $('#nameInput');
 };
 
-VE.Keyboard.prototype = {
+VE.KeyInputs.prototype = {
     helper: function helper(){
     	// ..
     }

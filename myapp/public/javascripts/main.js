@@ -8,14 +8,14 @@ window.addEventListener("DOMContentLoaded", function() {
     var fabric = new VE.fabric({ elemId: 'mycanvas' });
     fabric.initText();
     fabric.onResize();
-
-    var Keyboard = new VE.Keyboard();
-        Keyboard.hashtagInput.on("change paste keyup", function(evt) {
+    
+    var KeyInputs = new VE.KeyInputs();
+        KeyInputs.hashtag.on("change paste keyup", function(evt) {
             var value = $(this).val();
             fabric.setHashtagText(value);
         });
-
-        Keyboard.nameInput.on("change paste keyup", function(evt) {
+        
+        KeyInputs.name.on("change paste keyup", function(evt) {
             var value = $(this).val();
             fabric.setNameText(value);
         });
