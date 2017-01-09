@@ -12,12 +12,12 @@ window.addEventListener("DOMContentLoaded", function() {
     var Keyboard = new VE.Keyboard();
         Keyboard.hashtagInput.on("change paste keyup", function(evt) {
             var value = $(this).val();
-            fabric.updateHashtag(value);
+            fabric.setHashtagText(value);
         });
 
         Keyboard.nameInput.on("change paste keyup", function(evt) {
             var value = $(this).val();
-            fabric.updateName(value);
+            fabric.setNameText(value);
         });
 
     var exportBtn = $('.exportBtn');

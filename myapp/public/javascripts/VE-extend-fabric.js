@@ -24,13 +24,13 @@ VE.fabric.prototype = {
         this.canvas.add(this.hashtag.textbox);
     },
 
-    updateName: function updateName(value){
+    setNameText: function setNameText(value){
         var scope = this;
         this.name.setText(value);
         this.canvas.renderAll();
     },
 
-    updateHashtag: function updateHashtag(value){
+    setHashtagText: function setHashtagText(value){
         var scope = this;
         this.hashtag.setText(value);
         this.canvas.renderAll();
