@@ -9,8 +9,18 @@ window.addEventListener("DOMContentLoaded", function() {
     fabric.initText();
     fabric.onResize();
 
-    var exportBtn = $('.exportBtn');
+    var Keyboard = new VE.Keyboard();
+        Keyboard.hashtagInput.on("change paste keyup", function(evt) {
+            var value = $(this).val();
+            fabric.updateHashtag(value);
+        });
 
+        Keyboard.nameInput.on("change paste keyup", function(evt) {
+            var value = $(this).val();
+            fabric.updateName(value);
+        });
+
+    var exportBtn = $('.exportBtn');
     exportBtn.on('click', function(evt) {
         var url = fabric.canvas.toDataURL("image/png");
         document.write('<img src="' + url + '"/>');
@@ -20,6 +30,10 @@ window.addEventListener("DOMContentLoaded", function() {
         fabric.onResize();
     }, false);
 
+    add1();
+
+
+    // Test
     function add1() {
         fabric.loadImage({ url: './images/png1.png' });
     }

@@ -10,6 +10,7 @@ VE.Text = function Text(caption) {
         top: 0,
         left: 0,
         fontSize: 22,
+        fontFamily: 'Arial',
         textAlign: 'center',
         breakWords: true,
 
@@ -27,6 +28,10 @@ VE.Text.prototype = {
 	setTopLeft: function setTopLeft(top,left){
 		this.textbox.setTop(top);
 		this.textbox.setLeft(left);
+	},
+
+	setText: function setText(value){
+		this.textbox.setText(value);
 	},
 
 	onResize : function onResize(){

@@ -24,12 +24,16 @@ VE.fabric.prototype = {
         this.canvas.add(this.hashtag.textbox);
     },
 
-    updateName: function updateName(){
-
+    updateName: function updateName(value){
+        var scope = this;
+        this.name.setText(value);
+        this.canvas.renderAll();
     },
 
-    updateHashtag: function updateHashtag(){
-
+    updateHashtag: function updateHashtag(value){
+        var scope = this;
+        this.hashtag.setText(value);
+        this.canvas.renderAll();
     },
 
     removeOverlay: function removeOverlay() {
