@@ -24,13 +24,13 @@ VE.fabric.prototype = {
         this.canvas.add(this.hashtag.textbox);
     },
 
-    setNameText: function setNameText(value){
+    setNameText: function setNameText(value) {
         var scope = this;
         this.name.setText(value);
         this.canvas.renderAll();
     },
 
-    setHashtagText: function setHashtagText(value){
+    setHashtagText: function setHashtagText(value) {
         var scope = this;
         this.hashtag.setText(value);
         this.canvas.renderAll();
@@ -55,19 +55,19 @@ VE.fabric.prototype = {
             loadedImg.set({
                 left: 0,
                 top: 0,
+                height: scope.$canvasContainer.height(),
+                width: scope.$canvasContainer.width()
             });
 
             if (!scope.canvas.contains(scope.group)) {
-                scope.group.addWithUpdate(loadedImg);                
+                scope.group.addWithUpdate(loadedImg);
             } else {
                 scope.group.addWithUpdate(loadedImg);
+                scope.canvas.bringToFront(scope.name.textbox);
+                scope.canvas.bringToFront(scope.hashtag.textbox);
+                scope.removeOverlay();
             }
 
-            // Remove every changes
-            scope.removeOverlay();
-
-            // Bring Text to top
-            scope.canvas.bringToFront(scope.name.textbox);
             scope.canvas.renderAll();
         });
     },

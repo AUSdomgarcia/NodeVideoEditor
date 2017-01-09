@@ -8,13 +8,13 @@ window.addEventListener("DOMContentLoaded", function() {
     var fabric = new VE.fabric({ elemId: 'mycanvas' });
     fabric.initText();
     fabric.onResize();
-    
+
     var KeyInputs = new VE.KeyInputs();
         KeyInputs.hashtag.on("change paste keyup", function(evt) {
             var value = $(this).val();
             fabric.setHashtagText(value);
         });
-        
+
         KeyInputs.name.on("change paste keyup", function(evt) {
             var value = $(this).val();
             fabric.setNameText(value);
@@ -35,11 +35,11 @@ window.addEventListener("DOMContentLoaded", function() {
 
     // Test
     function add1() {
-        fabric.loadImage({ url: './images/png1.png' });
+        fabric.loadImage({ url: './images/png3.png' });
     }
 
     function add2() {
-        fabric.loadImage({ url: './images/png2.png' });
+        fabric.loadImage({ url: './images/png4.png' });
     }
 
     var is = true;
