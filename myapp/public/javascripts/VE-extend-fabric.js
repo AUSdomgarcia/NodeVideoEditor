@@ -14,9 +14,10 @@ VE.fabric = function Fabric(opts) {
 };
 
 VE.fabric.prototype = {
+
     initText: function initText() {
         var scope = this;
-        this.name = new VE.Text('Domz Garcia');
+        this.name = new VE.Text('Sunsilk PH');
         this.hashtag = new VE.Text('#SunsilkHastags');
         this.hashtag.setTopLeft(465, 0);
         // add text
@@ -24,16 +25,9 @@ VE.fabric.prototype = {
         this.canvas.add(this.hashtag.textbox);
     },
 
-    setNameText: function setNameText(value) {
+    getText : function getText(text){
         var scope = this;
-        this.name.setText(value);
-        this.canvas.renderAll();
-    },
-
-    setHashtagText: function setHashtagText(value) {
-        var scope = this;
-        this.hashtag.setText(value);
-        this.canvas.renderAll();
+        return this[text];
     },
 
     removeOverlay: function removeOverlay() {

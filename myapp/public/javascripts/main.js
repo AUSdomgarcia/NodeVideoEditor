@@ -10,14 +10,28 @@ window.addEventListener("DOMContentLoaded", function() {
     fabric.onResize();
 
     var KeyInputs = new VE.KeyInputs();
-        KeyInputs.hashtag.on("change paste keyup", function(evt) {
-            var value = $(this).val();
-            fabric.setHashtagText(value);
-        });
+    KeyInputs.hashtag.on("change paste keyup", function(evt) {
+        var value = $(this).val();
+        fabric.hashtag.textbox.setText(value);
+        fabric.canvas.renderAll();
+    });
 
-        KeyInputs.name.on("change paste keyup", function(evt) {
-            var value = $(this).val();
-            fabric.setNameText(value);
+    KeyInputs.name.on("change paste keyup", function(evt) {
+        var value = $(this).val();
+        fabric.name.textbox.setText(value);
+        fabric.canvas.renderAll();
+    });
+
+    var promise = axios.create({
+        baseURL: 'https://jsonplaceholder.typicode.com',
+    });
+
+    promise.get('/posts/1')
+        .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
         });
 
     var exportBtn = $('.exportBtn');

@@ -29,11 +29,7 @@ VE.Text.prototype = {
 		this.textbox.setTop(top);
 		this.textbox.setLeft(left);
 	},
-
-	setText: function setText(value){
-		this.textbox.setText(value);
-	},
-
+    
 	onResize : function onResize(){
 		this.textbox.setHeight(this.$canvasContainer.height());
         this.textbox.setWidth(this.$canvasContainer.width());
