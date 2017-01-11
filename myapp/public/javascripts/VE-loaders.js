@@ -1,8 +1,8 @@
 var VE = window.VE || {};
 
-VE.loader = {};
+VE.request = {};
 
-VE.loader = function loader(opts) {
+VE.request = function request(opts) {
     var scope = this;
     this.opts = opts;
     this.root = opts.root;
@@ -12,9 +12,12 @@ VE.loader = function loader(opts) {
     this.$videoList = $('.videoList');
     this.promise = axios.create({ baseURL: this.opts.apiURL });
     this.initialize();
+
+    this.overlayId = NaN;
+    this.videoId = NaN;
 };
 
-VE.loader.prototype = {
+VE.request.prototype = {
     getOverlay: function getOverlay() {
         var scope = this;
 
@@ -41,9 +44,9 @@ VE.loader.prototype = {
             });
     },
 
-    attachFabric: function addFabric(canvas){
-    	var scope = this;
-    	this.canvas = canvas;
+    attachFabric: function addFabric(canvas) {
+        var scope = this;
+        this.canvas = canvas;
     },
 
     bindUIOverlays: function bindUIOverlays(response) {
@@ -59,16 +62,16 @@ VE.loader.prototype = {
             aTag.setAttribute('href', 'javascript:void(0)');
             aTag.setAttribute('class', 'btn btn-default');
             aTag.setAttribute('data-overlay', scope.root.concat(item.path));
+            aTag.setAttribute('data-id', item.id);
             scope.$overlayList.append(li);
         });
     },
 
     bindUIVideos: function bindUIVideos(response) {
-    	var scope = this;
+        var scope = this;
         var data = response.data.data;
-        
+
         data.map(function(item) {
-            console.log(item);
             var li = document.createElement('li');
             var aTag = document.createElement('a');
             li.appendChild(aTag);
@@ -76,6 +79,7 @@ VE.loader.prototype = {
             aTag.setAttribute('href', 'javascript:void(0)');
             aTag.setAttribute('class', 'btn btn-default');
             aTag.setAttribute('data-video', scope.root.concat(item.path));
+            aTag.setAttribute('data-id', item.id);
             scope.$videoList.append(li);
         });
     },

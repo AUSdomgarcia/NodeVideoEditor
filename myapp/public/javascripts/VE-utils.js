@@ -1,43 +1,5 @@
 var VE = window.VE || {};
 
-// Text Base
-VE.Text = function Text(caption) {
-	var scope = this;
-	this.$canvasContainer = $('.canvas-container');
-
-    this.textbox = new fabric.Textbox(caption, {
-        width: 300,
-        top: 0,
-        left: 0,
-        fontSize: 22,
-        fontFamily: 'Arial',
-        textAlign: 'center',
-        breakWords: true,
-
-        hasControls: false,
-        hasBorders: false,
-        hoverCursor: 'default',
-        perPixelTargetFind: true,
-        targetFindTolerance: 4,
-        selectable: false,
-        hasRotatingPoint: false
-    });
-};
-
-VE.Text.prototype = {
-	setTopLeft: function setTopLeft(top,left){
-		this.textbox.setTop(top);
-		this.textbox.setLeft(left);
-	},
-    
-	onResize : function onResize(){
-		this.textbox.setHeight(this.$canvasContainer.height());
-        this.textbox.setWidth(this.$canvasContainer.width());
-    }
-}
-
-// UTILS
-// =====
 VE.utils = {};
 
 VE.utils.overlayGroup = function overlayGroup(canvas) {
@@ -54,7 +16,27 @@ VE.utils.overlayGroup = function overlayGroup(canvas) {
         hasRotatingPoint: false
     });
     return group;
-}
+};
+
+VE.utils.toBlob = function toBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    // write the ArrayBuffer to a blob, and you're done
+    return new Blob([ab], { type: mimeString });
+};
 
 VE.utils.Extends_WrapLine = function Extends_WrapLine() {
     fabric.Textbox.prototype._wrapLine = function(ctx, text, lineIndex) {

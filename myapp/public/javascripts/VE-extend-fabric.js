@@ -63,7 +63,8 @@ VE.fabric.prototype = {
             }
 
             scope.canvas.renderAll();
-        });
+            
+        } , { crossOrigin: 'Anonymous' });
     },
 
     onResize: function onResize() {

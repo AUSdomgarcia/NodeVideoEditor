@@ -13,21 +13,13 @@
 
 			<div class="editor-container">
 				<div class="template-overlay-controls">
-					<ul class="overlayList">
-						<!-- <li><a href="javascript:void(0)" class="btn btn-default">template 1</a></li> -->
-						<!-- <li><a href="javascript:void(0)" class="btn btn-default">template 2</a></li> -->
-						<!-- <li><a href="javascript:void(0)" class="btn btn-default">template 3</a></li> -->
-					</ul>
+					<ul class="overlayList"></ul>
 				</div>
 				<div class="template-video-controls">
-					<ul class="videoList">
-						<!-- <li><a href="javascript:void(0)" class="btn btn-default">video 1</a></li> -->
-						<!-- <li><a href="javascript:void(0)" class="btn btn-default">video 2</a></li> -->
-						<!-- <li><a href="javascript:void(0)" class="btn btn-default">video 3</a></li> -->
-					</ul>
+					<ul class="videoList"></ul>
 				</div>
 				<div class="canvas-container">
-					<video id="myvideo" autoplay muted>
+					<video id="myvideo" autoplay crossOrigin="anonymous">
 						<source src="videos/vid1.mp4" type="video/mp4">
 						<!-- <source src="videos/vid1.ogg" type="video/ogg"> -->
 						<!-- <source src="videos/vid1.webm" type="video/webm"> -->
@@ -42,9 +34,8 @@
 					<div class="name">
 						<label for="">Hashtag<input id="hashtagInput" type="text"></label>
 					</div>	
-					<button class="exportBtn">Export</button>
+					<button class="exportBtn btn btn-default">Export</button>
 				</div>
-
 			</div>
 		</div>
 

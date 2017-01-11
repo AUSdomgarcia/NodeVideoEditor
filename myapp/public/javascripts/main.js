@@ -9,9 +9,9 @@ window.addEventListener("DOMContentLoaded", function() {
     Fabric.addText();
     Fabric.onResize();
 
-    // Loaders
-    var Loader = new VE.loader({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
-    Loader.attachFabric(Fabric);
+    // Request
+    var Request = new VE.request({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
+    Request.attachFabric(Fabric);
 
     // Window Events
     window.addEventListener("resize", function() {
@@ -21,27 +21,62 @@ window.addEventListener("DOMContentLoaded", function() {
     // Click Events
     var exportBtn = $('.exportBtn');
     exportBtn.on('click', function(evt) {
-        var url = fabric.canvas.toDataURL("image/png");
-        document.write('<img src="' + url + '"/>');
+        var url = Fabric.canvas.toDataURL("image/png");
+        var blob = VE.utils.toBlob(url);
+        var fd = new FormData();
+
+        fd.append('image', blob, 'any');
+        fd.append('hashtag', Fabric.hashtag.textbox.getText());
+        fd.append('name', Fabric.name.textbox.getText());
+        fd.append('overlay_template_id', Request.overlayId);
+        fd.append('video_template_id', Request.videoId);
+
+        // $.ajax({
+        //     type: 'POST',
+        //     url: Request.root.concat('api/handle'),
+        //     data: fd,
+        //     processData: false,
+        //     contentType: false
+        // }).done(function(data) {
+        //     console.log(data);
+        // });
+
+        Request.promise.post(Request.root.concat('api/handle'), {
+            data: fd
+        }, {
+            // 'Content-Type': 'application/json'
+            'Content-Type': false
+        })
+        .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                if (error) throw error;
+            });
     });
 
-    Loader.$overlayList.on('click', 'a', function(evt) {
-        if (Loader.canvas === null) return;
+    Request.$overlayList.on('click', 'a', function(evt) {
+        if (Request.canvas === null) return;
         var url = $(this).attr('data-overlay');
+        var id = $(this).attr('data-id');
+        Request.overlayId = id;
         Fabric.loadImage({ url: url });
     });
 
-    Loader.$videoList.on('click', 'a', function(evt) {
-        if (Loader.canvas === null) return;
+    Request.$videoList.on('click', 'a', function(evt) {
+        if (Request.canvas === null) return;
         var url = $(this).attr('data-video');
+        var id = $(this).attr('data-id');
+        Request.videoId = id;
+
         var myvideo = document.getElementById('myvideo');
-        
-            myvideo.pause();
+
+        myvideo.pause();
 
         var source = $('#myvideo').children();
-            $(source[0])[0].src = url;
-            myvideo.load();
-            myvideo.play();
+        $(source[0])[0].src = url;
+        myvideo.load();
+        myvideo.play();
     });
 
     // Inputs
