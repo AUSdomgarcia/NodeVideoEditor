@@ -31,28 +31,28 @@ window.addEventListener("DOMContentLoaded", function() {
         fd.append('overlay_template_id', Request.overlayId);
         fd.append('video_template_id', Request.videoId);
 
-        // $.ajax({
-        //     type: 'POST',
-        //     url: Request.root.concat('api/handle'),
-        //     data: fd,
-        //     processData: false,
-        //     contentType: false
-        // }).done(function(data) {
-        //     console.log(data);
-        // });
+        $.ajax({
+            type: 'POST',
+            url: Request.root.concat('api/handle'),
+            data: fd,
+            processData: false,
+            contentType: false
+        }).done(function(data) {
+            console.log(data);
+        });
 
-        Request.promise.post(Request.root.concat('api/handle'), {
-            data: fd
-        }, {
-            // 'Content-Type': 'application/json'
-            'Content-Type': false
-        })
-        .then(function(response) {
-                console.log(response);
-            })
-            .catch(function(error) {
-                if (error) throw error;
-            });
+        // Request.promise.post(Request.root.concat('api/handle'), {
+        //     data: fd
+        // }, {
+        //     // 'Content-Type': 'application/json'
+        //     'Content-Type': false
+        // })
+        // .then(function(response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function(error) {
+        //         if (error) throw error;
+        //     });
     });
 
     Request.$overlayList.on('click', 'a', function(evt) {
