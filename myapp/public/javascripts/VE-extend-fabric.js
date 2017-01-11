@@ -15,7 +15,7 @@ VE.fabric = function Fabric(opts) {
 
 VE.fabric.prototype = {
 
-    initText: function initText() {
+    addText: function addText() {
         var scope = this;
         this.name = new VE.Text('Sunsilk PH');
         this.hashtag = new VE.Text('#SunsilkHastags');

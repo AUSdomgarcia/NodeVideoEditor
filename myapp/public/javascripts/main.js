@@ -5,65 +5,58 @@ window.addEventListener("DOMContentLoaded", function() {
     VE.utils.Extends_WrapLine();
 
     // Main Fabric
-    var fabric = new VE.fabric({ elemId: 'mycanvas' });
-    fabric.initText();
-    fabric.onResize();
+    var Fabric = new VE.fabric({ elemId: 'mycanvas' });
+    Fabric.addText();
+    Fabric.onResize();
 
-    var KeyInputs = new VE.KeyInputs();
-    KeyInputs.hashtag.on("change paste keyup", function(evt) {
-        var value = $(this).val();
-        fabric.hashtag.textbox.setText(value);
-        fabric.canvas.renderAll();
-    });
+    // Loaders
+    var Loader = new VE.loader({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
+    Loader.attachFabric(Fabric);
 
-    KeyInputs.name.on("change paste keyup", function(evt) {
-        var value = $(this).val();
-        fabric.name.textbox.setText(value);
-        fabric.canvas.renderAll();
-    });
+    // Window Events
+    window.addEventListener("resize", function() {
+        Fabric.onResize();
+    }, false);
 
-    var promise = axios.create({
-        baseURL: 'https://jsonplaceholder.typicode.com',
-    });
-
-    promise.get('/posts/1')
-        .then(function(response) {
-            console.log(response);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
-
+    // Click Events
     var exportBtn = $('.exportBtn');
     exportBtn.on('click', function(evt) {
         var url = fabric.canvas.toDataURL("image/png");
         document.write('<img src="' + url + '"/>');
     });
 
-    window.addEventListener("resize", function() {
-        fabric.onResize();
-    }, false);
-
-    add1();
-
-
-    // Test
-    function add1() {
-        fabric.loadImage({ url: './images/png3.png' });
-    }
-
-    function add2() {
-        fabric.loadImage({ url: './images/png4.png' });
-    }
-
-    var is = true;
-    $('.template-overlay-controls').on('click', 'a', function(evt) {
-        var bool = is ? false : true;
-        is = bool;
-        if (is) {
-            add1();
-        } else {
-            add2();
-        }
+    Loader.$overlayList.on('click', 'a', function(evt) {
+        if (Loader.canvas === null) return;
+        var url = $(this).attr('data-overlay');
+        Fabric.loadImage({ url: url });
     });
+
+    Loader.$videoList.on('click', 'a', function(evt) {
+        if (Loader.canvas === null) return;
+        var url = $(this).attr('data-video');
+        var myvideo = document.getElementById('myvideo');
+        
+            myvideo.pause();
+
+        var source = $('#myvideo').children();
+            $(source[0])[0].src = url;
+            myvideo.load();
+            myvideo.play();
+    });
+
+    // Inputs
+    var KeyInputs = new VE.KeyInputs();
+    KeyInputs.hashtag.on("change paste keyup", function(evt) {
+        var value = $(this).val();
+        Fabric.hashtag.textbox.setText(value);
+        Fabric.canvas.renderAll();
+    });
+
+    KeyInputs.name.on("change paste keyup", function(evt) {
+        var value = $(this).val();
+        Fabric.name.textbox.setText(value);
+        Fabric.canvas.renderAll();
+    });
+
+
 });
