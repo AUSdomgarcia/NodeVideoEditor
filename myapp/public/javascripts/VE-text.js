@@ -9,7 +9,7 @@ VE.Text = function Text(caption) {
         top: 0,
         left: 0,
         fontSize: 22,
-        fontFamily: 'Arial',
+        fontFamily: 'DancingintheMoonlight',
         textAlign: 'center',
         breakWords: true,
 

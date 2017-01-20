@@ -1,13 +1,13 @@
 "use strict";
 
+// Window Hooks
 window.addEventListener("DOMContentLoaded", function() {
     // Utils Text.prototype
     VE.utils.Extends_WrapLine();
 
     // Main Fabric
     var Fabric = new VE.fabric({ elemId: 'mycanvas' });
-    Fabric.addText();
-    Fabric.onResize();
+        Fabric.addText();
 
     // Request
     var Request = new VE.request({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", function() {
         }).done(function(data) {
             console.log(data);
         });
-
+        
         // Request.promise.post(Request.root.concat('api/handle'), {
         //     data: fd
         // }, {
@@ -92,6 +92,11 @@ window.addEventListener("DOMContentLoaded", function() {
         Fabric.name.textbox.setText(value);
         Fabric.canvas.renderAll();
     });
-
-
 });
+
+// Document Hooks
+document.onreadystatechange = function() {
+    if (document.readyState === 'complete') {
+        Fabric.onResize();
+    }
+};
