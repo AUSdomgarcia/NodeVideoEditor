@@ -29,6 +29,10 @@ VE.Text.prototype = {
         this.textbox.setLeft(left);
     },
 
+    setFont: function setFont(fontface){
+        this.textbox.fontFamily = fontface;
+    },
+
     onResize: function onResize() {
         this.textbox.setHeight(this.$canvasContainer.height());
         this.textbox.setWidth(this.$canvasContainer.width());

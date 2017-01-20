@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
     // Main Fabric
     var Fabric = new VE.fabric({ elemId: 'mycanvas' });
-        Fabric.addText();
+    Fabric.addText();
 
     // Request
     var Request = new VE.request({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", function() {
         }).done(function(data) {
             console.log(data);
         });
-        
+
         // Request.promise.post(Request.root.concat('api/handle'), {
         //     data: fd
         // }, {
@@ -80,23 +80,29 @@ window.addEventListener("DOMContentLoaded", function() {
     });
 
     // Inputs
-    var KeyInputs = new VE.KeyInputs();
-    KeyInputs.hashtag.on("change paste keyup", function(evt) {
+    var KeyboardInput = new VE.KeyboardInput();
+    KeyboardInput.hashtag.on("change paste keyup", function(evt) {
         var value = $(this).val();
         Fabric.hashtag.textbox.setText(value);
         Fabric.canvas.renderAll();
     });
 
-    KeyInputs.name.on("change paste keyup", function(evt) {
+    KeyboardInput.name.on("change paste keyup", function(evt) {
         var value = $(this).val();
         Fabric.name.textbox.setText(value);
         Fabric.canvas.renderAll();
     });
-});
 
-// Document Hooks
-document.onreadystatechange = function() {
-    if (document.readyState === 'complete') {
-        Fabric.onResize();
-    }
-};
+    // Document Hooks
+    document.onreadystatechange = function() {
+        if (document.readyState === 'complete' && typeof Fabric === 'object') {
+            Fabric.onResize();
+        }
+    };
+
+    var delay = setTimeout(function() {
+        clearTimeout(delay);
+        Fabric.setFont('Arial');
+        Fabric.update();
+    }, 5000);
+});

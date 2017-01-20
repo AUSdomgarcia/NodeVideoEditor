@@ -14,6 +14,10 @@ VE.fabric = function Fabric(opts) {
 };
 
 VE.fabric.prototype = {
+    setFont: function setFont(fontface){
+        this.hashtag.setFont(fontface);
+        this.name.setFont(fontface);
+    },
 
     addText: function addText() {
         var scope = this;
@@ -74,6 +78,10 @@ VE.fabric.prototype = {
         // Name
         this.name.onResize();
         this.hashtag.onResize();
+        this.canvas.renderAll();
+    },
+
+    update: function update(){
         this.canvas.renderAll();
     }
 }
