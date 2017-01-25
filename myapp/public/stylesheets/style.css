@@ -8,8 +8,10 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
+/*	width: 100%;
+	height: 100%;*/
+	width: calc(320px * 1.5);
+	height: calc(180px * 1.5);
 }
 
 .editor-container {
@@ -45,7 +47,7 @@ body {
 	border:1px solid green;
 }
 
-.hashtag, .name {
+.hashtag, .name, .dynamic {
 	padding: 10px 10px 5px;
 	width: 100%;
 	border:1px solid red;

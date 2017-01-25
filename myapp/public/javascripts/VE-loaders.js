@@ -17,6 +17,7 @@ VE.request = function request(opts) {
     this.videoId = NaN;
 };
 
+/* Handle url loaders */
 VE.request.prototype = {
     getOverlay: function getOverlay() {
         var scope = this;

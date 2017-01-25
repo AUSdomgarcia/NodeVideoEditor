@@ -12,31 +12,61 @@
 		<div class="main">
 
 			<div class="editor-container">
+
 				<div class="template-overlay-controls">
 					<ul class="overlayList"></ul>
 				</div>
+
 				<div class="template-video-controls">
 					<ul class="videoList"></ul>
 				</div>
+
 				<div class="canvas-container">
 					<video id="myvideo" autoplay crossOrigin="anonymous" muted>
-						<source src="videos/vid1.mp4" type="video/mp4">
+						<source src="videos/vid1.mp4" type="video/mp4" />
 						<!-- <source src="videos/vid1.ogg" type="video/ogg"> -->
 						<!-- <source src="videos/vid1.webm" type="video/webm"> -->
 					</video>
 					<canvas id="mycanvas"></canvas>
 				</div>
-				
-				<div class="interact">
-					<div class="hashtag">
-						<label for="">Username<input id="nameInput" type="text"></label>
+			</div>
+
+			<br />
+				 
+			<div class="interact-controls container">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input id="nameInput" name="username" class="form-control" type="text">
+						</div>
+
+						<div class="form-group">
+							<label for="username">Hashtag</label>
+							<input id="hashtagInput" name="username" class="form-control" type="text">
+						</div>
 					</div>
-					<div class="name">
-						<label for="">Hashtag<input id="hashtagInput" type="text"></label>
-					</div>	
-					<button class="exportBtn btn btn-default">Export</button>
+
+					<div class="canvas-type col-md-4">
+						<h3>Canvas Type</h3>
+						<label><input type="radio" name="canvas_type" value="image" >&nbsp;Image</label>
+						<br />
+						<label><input type="radio" name="canvas_type" value="video" checked>&nbsp;Video</label>
+					</div>
+
+					<div class="col-md-4">
+						dynamics
+					</div>
 				</div>
 			</div>
+
+			<div class='dynamic'>
+				<p>Dynamic Input</p>
+			</div>
+
+			<button class="exportBtn btn btn-default">Export</button>
+
+			<canvas id="dynamic-canvas"></canvas>
 		</div>
 
 		<footer>

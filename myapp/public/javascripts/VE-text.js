@@ -8,19 +8,30 @@ VE.Text = function Text(caption) {
         width: 300,
         top: 0,
         left: 0,
-        fontSize: 22,
-        fontFamily: 'DancingintheMoonlight',
+        fontSize: 18,
+        fontFamily: 'Arial',
         textAlign: 'center',
         breakWords: true,
 
-        hasControls: false,
-        hasBorders: false,
-        hoverCursor: 'default',
+        // fontFamily: 'DancingintheMoonlight',
+        // hasControls: false,
+        // hasBorders: false,
+        // hoverCursor: 'default',
+        // selectable: false,
+        // hasRotatingPoint: false
+
+        hasControls: true,
+        hasBorders: true,
+        selectable: true,
+        hasRotatingPoint: true,
+
         perPixelTargetFind: true,
         targetFindTolerance: 4,
-        selectable: false,
-        hasRotatingPoint: false
     });
+
+    this.HEIGHT = this.textbox.getHeight();
+    this.WIDTH = this.textbox.getWidth();
+
 };
 
 VE.Text.prototype = {
@@ -29,12 +40,22 @@ VE.Text.prototype = {
         this.textbox.setLeft(left);
     },
 
-    setFont: function setFont(fontface){
+    modifyWidth: function modifyWidth(value){
+        this.textbox.setWidth(value);
+        this.WIDTH = this.textbox.getWidth();
+    },
+
+    modifyFont: function modifyFont(fontface, fontsize){
         this.textbox.fontFamily = fontface;
+        this.textbox.fontSize = fontsize;
     },
 
     onResize: function onResize() {
-        this.textbox.setHeight(this.$canvasContainer.height());
-        this.textbox.setWidth(this.$canvasContainer.width());
+        if(this.HEIGHT !== 0 && this.WIDTH !== 0){
+            this.textbox.setHeight(this.HEIGHT);
+            this.textbox.setWidth(this.WIDTH);
+        }
     }
+
+
 };

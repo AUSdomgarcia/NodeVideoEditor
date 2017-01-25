@@ -38,7 +38,7 @@ VE.utils.toBlob = function toBlob(dataURI) {
     return new Blob([ab], { type: mimeString });
 };
 
-VE.utils.Extends_WrapLine = function Extends_WrapLine() {
+VE.utils.Prototype_WrapLine = function Prototype_WrapLine() {
     fabric.Textbox.prototype._wrapLine = function(ctx, text, lineIndex) {
         var lineWidth = 0,
             lines = [],
@@ -106,3 +106,17 @@ VE.utils.Extends_WrapLine = function Extends_WrapLine() {
         return lines;
     };
 };
+
+VE.utils.Prototype_GetName = function Prototype_GetName(){
+    fabric.Canvas.prototype.getItemsByName = function(name) {
+      var objectList = [],
+          objects = this.getObjects();
+
+      for (var i = 0, len = this.size(); i < len; i++) {
+        if (objects[i].name && objects[i].name === name) {
+          objectList.push(objects[i]);
+        }
+      }
+      return objectList;
+    };
+}
