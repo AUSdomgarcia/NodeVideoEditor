@@ -2,6 +2,7 @@ var VE = window.VE || {};
 
 VE.Text = function Text(caption) {
     var scope = this;
+
     this.$canvasContainer = $('.canvas-container');
 
     this.textbox = new fabric.Textbox(caption, {
@@ -9,10 +10,10 @@ VE.Text = function Text(caption) {
         top: 0,
         left: 0,
         fontSize: 18,
-        fontFamily: 'Arial',
+        fontFamily: 'sans',
         textAlign: 'center',
         breakWords: true,
-
+        lineHeight: 0.8,
         // fontFamily: 'DancingintheMoonlight',
         // hasControls: false,
         // hasBorders: false,
@@ -31,7 +32,6 @@ VE.Text = function Text(caption) {
 
     this.HEIGHT = this.textbox.getHeight();
     this.WIDTH = this.textbox.getWidth();
-
 };
 
 VE.Text.prototype = {
@@ -56,6 +56,4 @@ VE.Text.prototype = {
             this.textbox.setWidth(this.WIDTH);
         }
     }
-
-
 };

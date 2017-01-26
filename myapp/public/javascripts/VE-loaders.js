@@ -1,8 +1,8 @@
 var VE = window.VE || {};
 
-VE.request = {};
+VE.loader = {};
 
-VE.request = function request(opts) {
+VE.loader = function request(opts) {
     var scope = this;
     this.opts = opts;
     this.root = opts.root;
@@ -18,7 +18,7 @@ VE.request = function request(opts) {
 };
 
 /* Handle url loaders */
-VE.request.prototype = {
+VE.loader.prototype = {
     getOverlay: function getOverlay() {
         var scope = this;
 

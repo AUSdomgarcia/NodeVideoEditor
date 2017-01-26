@@ -14,7 +14,7 @@ VE.fabric = function Fabric(opts) {
     this.group = VE.utils.overlayGroup(fabric.canvas);
     this.canvas.add(this.group);
 
-    console.log(this.WIDTH,this.HEIGHT);
+    this.textArr = [];
 };
 
 VE.fabric.prototype = {
@@ -37,31 +37,32 @@ VE.fabric.prototype = {
         this.update();
     },
 
-    setFont: function setFont(fontface){
-        this.hashtag.setFont(fontface);
-        this.name.setFont(fontface);
+    modifyFont: function modifyFont(fontface, fontsize){
+        this.textArr.map(function(el){
+            el.modifyFont(fontface, fontsize);
+        });
     },
 
-    addText: function addText() {
+    defaultText: function defaultText() {
         var scope = this;
         // instance
         this.name = new VE.Text('Sunsilk PH');
-        this.hashtag = new VE.Text('#SunsilkHastags');
+        this.hashtag = new VE.Text('#SomeHashtagGoals');
+
+        this.textArr.push.apply(this.textArr, [this.name, this.hashtag]);
 
         // Coord
         var offset = -14;
-        this.name.modifyWidth(125);
-        this.name.modifyFont('Arial', 18);
-        this.name.setTopLeft(150, ( (this.WIDTH/2) - (this.name.WIDTH/2) + offset) );
+        var itr = 0;
 
-        console.log('name', this.name.WIDTH, 'canvas', this.WIDTH/2);
+        this.textArr.map(function(el){
+            el.modifyWidth(125);
+            el.setTopLeft(150 * itr, ( (scope.WIDTH/2) - (scope.name.WIDTH/2) + offset) );
+            scope.canvas.add(el.textbox);
+            itr++;
+        });
 
-        this.hashtag.setTopLeft(0, scope.WIDTH/2);
-        
-        // add text
-        this.canvas.add(this.name.textbox);
-
-        // this.canvas.add(this.hashtag.textbox);
+        this.canvas.renderAll();
     },
 
     getText : function getText(text){
@@ -77,6 +78,25 @@ VE.fabric.prototype = {
             this.group.remove(items[0]);
             this.canvas.renderAll();
         }
+    },
+
+    clear :function clear(){
+        var objects = this.canvas.getObjects();
+        for (var i in objects) {
+            delete objects[i];
+            this.canvas.remove(objects[i]);
+            this.update();
+        }
+
+        // For active
+        if(this.canvas.getActiveGroup()){
+              this.canvas.getActiveGroup().forEachObject(function(o){ this.canvas.remove(o) });
+              this.canvas.discardActiveGroup().renderAll();
+        } else {
+          this.canvas.remove(this.canvas.getActiveObject());
+        }
+
+        console.log( this.canvas.getObjects() )
     },
 
     loadImage: function loadImage(opts) {
@@ -108,13 +128,10 @@ VE.fabric.prototype = {
 
     onResize: function onResize() {
         var scope = this;
-        // Disable Resize
-        // this.canvas.setHeight(this.$canvasContainer.height());
-        // this.canvas.setWidth(this.$canvasContainer.width());
 
-        // Name
-        this.name.onResize();
-        this.hashtag.onResize();
+        this.textArr.map(function(el){
+            el.onResize();
+        });
         this.canvas.renderAll();
     },
 
@@ -126,5 +143,36 @@ VE.fabric.prototype = {
         this.canvas.setWidth(w);
         this.canvas.setHeight(h);
         this.update();
+    },
+
+    zoomIt: function zoomIt(factor) {
+        this.canvas.setHeight(this.canvas.getHeight() * factor);
+        this.canvas.setWidth(this.canvas.getWidth() * factor);
+        if (this.canvas.backgroundImage) {
+            // Need to scale background images as well
+            var bi = this.canvas.backgroundImage;
+            bi.width = bi.width * factor; bi.height = bi.height * factor;
+        }
+        var objects = this.canvas.getObjects();
+        for (var i in objects) {
+            var scaleX = objects[i].scaleX;
+            var scaleY = objects[i].scaleY;
+            var left = objects[i].left;
+            var top = objects[i].top;
+
+            var tempScaleX = scaleX * factor;
+            var tempScaleY = scaleY * factor;
+            var tempLeft = left * factor;
+            var tempTop = top * factor;
+
+            objects[i].scaleX = tempScaleX;
+            objects[i].scaleY = tempScaleY;
+            objects[i].left = tempLeft;
+            objects[i].top = tempTop;
+
+            objects[i].setCoords();
+        }
+        this.canvas.renderAll();
+        this.canvas.calcOffset();
     }
 }
