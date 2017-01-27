@@ -1,6 +1,17 @@
 "use strict";
 
 // Window Hooks
+
+window.cancelRequestAnimFrame = (function(){
+    return  window.cancelAnimationFrame ||
+            window.webkitCancelRequestAnimationFrame ||
+            window.mozCancelRequestAnimationFrame ||
+            window.oCancelRequestAnimationFrame ||
+            window.msCancelRequestAnimationFrame ||
+            clearTimeout
+})();
+
+
 window.addEventListener("DOMContentLoaded", function() {
     // Utils Text.prototype
     VE.utils.Prototype_WrapLine();
@@ -9,7 +20,7 @@ window.addEventListener("DOMContentLoaded", function() {
     var $type = null;
 
     // Main Fabric
-    var Fabric = new VE.fabric({ elemId: 'mycanvas' });
+    var Fabric = new VE.fabric({ elemId: 'mainCanvas' });
 
     // Loader
     var Loader = new VE.loader({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
@@ -18,6 +29,28 @@ window.addEventListener("DOMContentLoaded", function() {
     // dynamicTextbox
     var dynamicTextbox = new VE.dynamicTextbox();
         dynamicTextbox.initialTextbox();
+
+    // Video loaded
+    var VideoJS = new VE.videoJS();  
+        VideoJS.attachFabric(Fabric);
+
+    // RequetAnimation
+    var request;
+    
+    var render = function(){
+        
+        Fabric.canvas.renderAll();
+
+        if(VideoJS){
+
+            VideoJS.getContextAvailable();
+
+        }
+
+        request = fabric.util.requestAnimFrame(render);
+    };
+
+    fabric.util.requestAnimFrame(render);
 
     // Window Events
     window.addEventListener("resize", function() {
@@ -29,12 +62,12 @@ window.addEventListener("DOMContentLoaded", function() {
             controllerByType: function controllerByType(type){
                switch(type){
                 case 'image':
-                    $('#myvideo').get(0).pause();
-                    $('#myvideo').hide();
+                    // $('#myvideo').get(0).pause();
+                    // $('#myvideo').hide();
                 break;
                 case 'video':
-                    $('#myvideo').get(0).play();
-                    $('#myvideo').show();
+                    // $('#myvideo').get(0).play();
+                    // $('#myvideo').show();
                 break;
                 }
             }
@@ -156,6 +189,7 @@ window.addEventListener("DOMContentLoaded", function() {
             Fabric.modifyFont('Arial', 25);
             
             Fabric.onResize();
+
         }
     };
 });

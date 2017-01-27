@@ -22,13 +22,28 @@
 				</div>
 
 				<div class="canvas-container">
-					<video id="myvideo" autoplay crossOrigin="anonymous" muted>
-						<source src="videos/vid1.mp4" type="video/mp4" />
-						<!-- <source src="videos/vid1.ogg" type="video/ogg"> -->
-						<!-- <source src="videos/vid1.webm" type="video/webm"> -->
-					</video>
-					<canvas id="mycanvas"></canvas>
+					<div class="two">
+						<div class="col-xs-6">
+							<video id="mainVideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid">
+								<source src="videos/vid1.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<div class="col-xs-6">
+							<h3>Wait until video was loaded.</h3>	
+							<a href='javascript:void(0)' class='btn-generate btn btn-primary'>Generate .WEBM</a>						
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+					<canvas id="mainCanvas"></canvas>
+
+					<br/>
+					<br/>
+
+					<video id='whammyCompile' autoplay></video>
 				</div>
+
+				<div class="clearfix"></div>
 			</div>
 
 			<br />
@@ -55,8 +70,13 @@
 					</div>
 
 					<div class="col-md-4">
-						<h3>Hello</h3>
-						<ul id="dynamic-textbox"></ul>
+						<div class="row">
+							<h3>Fonts Available</h3>
+						</div>
+						<div class="row">
+							<h3>Hello</h3>
+							<ul id="dynamic-textbox"></ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -76,4 +96,12 @@
 	</body>
 
 </html>
+
+<!-- <video id="myvideo" crossOrigin="anonymous" autoplay muted> -->
+	<!-- <source src="videos/vid1.mp4" type="video/mp4" /> -->
+	<!-- <source src="videos/vid1.webm" type="video/webm" /> -->
+	<!-- Your browser does not support the video tag. -->
+	<!-- <source src="videos/vid1.ogg" type="video/ogg"> -->
+	<!-- <source src="videos/vid1.webm" type="video/webm"> -->
+<!-- </video> -->
 	

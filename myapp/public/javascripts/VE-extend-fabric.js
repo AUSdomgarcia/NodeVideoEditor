@@ -26,8 +26,8 @@ VE.fabric.prototype = {
             break;
 
             case 'video':
-                this.canvas.setHeight(180 * this.SCALE_VIDEO);
-                this.canvas.setWidth(320 * this.SCALE_VIDEO);
+                this.canvas.setHeight(0); // this.canvas.setHeight(180 * this.SCALE_VIDEO);
+                this.canvas.setWidth(0); // this.canvas.setWidth(320 * this.SCALE_VIDEO);
             break;
         }
 
@@ -115,9 +115,16 @@ VE.fabric.prototype = {
             if (!scope.canvas.contains(scope.group)) {
                 scope.group.addWithUpdate(loadedImg);
             } else {
+
                 scope.group.addWithUpdate(loadedImg);
-                scope.canvas.bringToFront(scope.name.textbox);
-                scope.canvas.bringToFront(scope.hashtag.textbox);
+
+                scope.textArr.map(function(el){
+                    scope.canvas.bringToFront(el.textbox);
+                });
+                
+                // scope.canvas.bringToFront(scope.name.textbox);
+                // scope.canvas.bringToFront(scope.hashtag.textbox);
+
                 scope.removeOverlay();
             }
 
@@ -174,5 +181,9 @@ VE.fabric.prototype = {
         }
         this.canvas.renderAll();
         this.canvas.calcOffset();
+    },
+
+    onContextUpdate: function onContextUpdate(){
+        
     }
 }
