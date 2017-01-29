@@ -167,20 +167,14 @@ VE.videoJS.prototype = {
         // scope.canCaptureContext = false;
         // return;
 
-        ctx.save();
-
-        var imageData = ctx.getImageData(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
-
+        var imageData = ctx.getImageData(0, 0, Math.floor(this.fabric.canvas.getWidth() - 10), Math.floor(this.fabric.canvas.getHeight()) - 10);
+        
         ctx.fillRect(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
+
+        ctx.fillStyle = ctx.putImageData(imageData, 5, 5);
         ctx.save();
         
-        ctx.restore();
-        ctx.fillStyle = ctx.putImageData(imageData, 0, 0);
-        ctx.save();
-
-        ctx.restore();
-
-        scope.whammy.add( ctx.canvas );
+        scope.whammy.add(ctx.canvas);
 
         // this.whammy.add(this.fabric.canvas); //<-- DITO
     },
