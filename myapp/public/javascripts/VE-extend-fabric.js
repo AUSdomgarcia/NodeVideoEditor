@@ -21,13 +21,13 @@ VE.fabric.prototype = {
     setCanvasType: function setCanvasType(type){
         switch(type){
             case 'image':
-                this.canvas.setHeight(900 * this.SCALE_IMAGE);
-                this.canvas.setWidth(900 * this.SCALE_IMAGE);
+                this.canvas.setHeight(Math.floor(900 * this.SCALE_IMAGE)); // <--- IBALIK
+                this.canvas.setWidth(Math.floor(900 * this.SCALE_IMAGE)); // <--- IBALIK
             break;
 
             case 'video':
-                this.canvas.setHeight(0); // this.canvas.setHeight(180 * this.SCALE_VIDEO);
-                this.canvas.setWidth(0); // this.canvas.setWidth(320 * this.SCALE_VIDEO);
+                // this.canvas.setHeight(0); // this.canvas.setHeight(180 * this.SCALE_VIDEO); <--- IBALIK
+                // this.canvas.setWidth(0); // this.canvas.setWidth(320 * this.SCALE_VIDEO); <--- IBALIK
             break;
         }
 
@@ -121,9 +121,6 @@ VE.fabric.prototype = {
                 scope.textArr.map(function(el){
                     scope.canvas.bringToFront(el.textbox);
                 });
-                
-                // scope.canvas.bringToFront(scope.name.textbox);
-                // scope.canvas.bringToFront(scope.hashtag.textbox);
 
                 scope.removeOverlay();
             }
@@ -147,14 +144,15 @@ VE.fabric.prototype = {
     },
 
     modifyDimension : function modifyDimension(w,h){
-        this.canvas.setWidth(w);
-        this.canvas.setHeight(h);
+        this.canvas.setWidth(Math.floor(w)); // <--- IBALIK
+        this.canvas.setHeight(Math.floor(h)) // <--- IBALIK
         this.update();
     },
 
     zoomIt: function zoomIt(factor) {
-        this.canvas.setHeight(this.canvas.getHeight() * factor);
-        this.canvas.setWidth(this.canvas.getWidth() * factor);
+        this.canvas.setHeight(Math.floor(this.canvas.getHeight() * factor)); // <--- IBALIK
+        this.canvas.setWidth(Math.floor(this.canvas.getWidth() * factor)); // <--- IBALIK
+
         if (this.canvas.backgroundImage) {
             // Need to scale background images as well
             var bi = this.canvas.backgroundImage;
@@ -180,7 +178,7 @@ VE.fabric.prototype = {
             objects[i].setCoords();
         }
         this.canvas.renderAll();
-        this.canvas.calcOffset();
+        this.canvas.calcOffset(); // <--- IBALIK
     },
 
     onContextUpdate: function onContextUpdate(){

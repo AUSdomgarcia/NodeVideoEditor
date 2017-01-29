@@ -61,6 +61,7 @@ VE.videoJS.prototype = {
         this.videojs.on('ended', function() {
 
             console.log('done!');
+            console.log(scope.fabric.canvas.getHeight(),scope.fabric.canvas.getWidth());
 
             if (scope.videojs.currentTime() >= scope.VIDEO_DURATION && scope.isVideoAdded === false && scope.bufferComplete === false) {
                 scope.isVideoAdded = true;
@@ -117,16 +118,20 @@ VE.videoJS.prototype = {
             // centeredScaling: true
         });
         
-        this.fabric.canvas.add(this.fabricVideo);
-        this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
+        // this.fabric.canvas.add(this.fabricVideo);
+        // this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
     
-        this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
-        this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
+        // this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
+        // this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
 
-        this.$mainCanvas.width(Math.floor(this.VWIDTH));
-        this.$mainCanvas.height(Math.floor(this.VHEIGHT));
+        // this.$mainCanvas.width(Math.floor(this.VWIDTH));
+        // this.$mainCanvas.height(Math.floor(this.VHEIGHT));
 
-        console.log('w',this.$mainCanvas.width(),'h',this.fabric.canvas.getHeight())
+        // this.fabric.canvas.setWidth(Math.floor(400));
+        // this.fabric.canvas.setHeight(Math.floor(400));
+
+        // this.$mainCanvas.width(Math.floor(400));
+        // this.$mainCanvas.height(Math.floor(400));
     },
 
     compileWEBM: function compileWEBM() { // <_---- DITO
@@ -149,19 +154,13 @@ VE.videoJS.prototype = {
 
     getContextAvailable: function getContextAvailable() {
         var scope = this;
-        
-        this.$mainCanvas.width(Math.floor(this.VWIDTH));
-        this.$mainCanvas.height(Math.floor(this.VHEIGHT));
+        console.log('main', this.fabric.canvas.getContext('2d').canvas);
+        scope.canCaptureContext = false;
+        return;
 
-        this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
-        this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
+        console.log('now capturing');
 
-        // console.log('main', this.fabric.canvas.getContext('2d').canvas);
-        // scope.canCaptureContext = false;
-        // return;
-        // console.log('now capturing', this.fabric.canvas.getHeight(), this.fabric.canvas.getWidth(), this.fabric.canvas.getContext('2d').canvas);
-
-        this.whammy.add(this.fabric.canvas.getContext('2d')); //<-- DITO
+        this.whammy.add(this.fabric.canvas); //<-- DITO
     },
 
     clock: function clock(time){
