@@ -35,12 +35,12 @@ window.addEventListener("DOMContentLoaded", function() {
 
     var request;
 
-    var render = function() {
+    var render = function() { // <--- DITO
 
         if (typeof Fabric !== 'object' || typeof VideoJS !== 'object') return;
 
         VE.utils.resetFPSto(23, fabric.util.requestAnimFrame, function() {
-            
+
             if (VideoJS.videojs.paused() === false) {
 
                 if (VideoJS.bufferComplete === true && VideoJS.isVideoAdded === true) {

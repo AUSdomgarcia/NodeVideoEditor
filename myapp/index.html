@@ -3,7 +3,13 @@
 	<title>Video Editor</title>
 
 	<head>
-		<% include ../partials/header %>
+		<link rel="stylesheet" href="./vendors/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./vendors/css/bootstrap.min.css">
+<link rel="stylesheet" href="./vendors/css/video-js.css">
+
+<link rel="stylesheet" href="./stylesheets/style.css">
+
+<link rel="stylesheet" href="./font/styles.css">
 	</head>
 
 	<body>
@@ -44,7 +50,7 @@
 						<canvas id="mainCanvas"></canvas>
 					</div>
 
-					<canvas id="canvas"></canvas>
+					<canvas id="myCanvas1"></canvas>
 
 					<video id="awesome" width="150" height="150" controls autoplay loop></video>
 				
@@ -99,9 +105,35 @@
 		</div>
 
 		<footer>
-	        <% include ../partials/footer %>
-	    </footer>
+	       <script src="./vendors/js/jquery-1.9.1.min.js"></script>
+<script src="./vendors/js/bootstrap.min.js"></script>
+<script src="./vendors/js/fabric.min.js"></script>
 
+
+<script src="./vendors/js/whammy.js"></script>
+<!-- <script src="./vendors/js/whammy.v1.js"></script> -->
+
+
+<!--https://github.com/mzabriskie/axios-->
+
+<script src="./vendors/js/axios.min.js"></script>
+
+<script src="./vendors/js/video-js.min.js"></script>
+
+<script src="./javascripts/VE-extend-fabric.js"></script>
+<script src="./javascripts/VE-keyboard.js"></script>
+<script src="./javascripts/VE-loaders.js"></script>
+<script src="./javascripts/VE-text.js"></script>
+<script src="./javascripts/VE-utils.js"></script>
+<script src="./javascripts/VE-dynamic-textbox.js"></script>
+
+<!--<script src="./javascripts/VE-video.js"></script>-->
+
+<script src="./javascripts/VE-extends-videoJS.js"></script>
+
+<script src="./javascripts/main.js"></script>
+
+	    </footer>
 	</body>
 
 </html>
