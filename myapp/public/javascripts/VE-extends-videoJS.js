@@ -158,7 +158,7 @@ VE.videoJS.prototype = {
         // var ctx = this.$mainCanvas.get(0).getContext("2d");
 
         this.fabric.canvas.renderAll();
-        
+
         var ctx = this.fabric.canvas.getContext('2d');
         
         // console.log('main', this.fabric.canvas.getContext('2d').canvas);
@@ -169,16 +169,16 @@ VE.videoJS.prototype = {
 
         ctx.save();
 
-        // var imageData = ctx.getImageData(0, 0, Math.floor(this.VWIDTH), Math.floor(this.VHEIGHT));
+        var imageData = ctx.getImageData(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
 
-        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
+        ctx.save();
+        
+        ctx.restore();
+        ctx.fillStyle = ctx.putImageData(imageData, 0, 0);
+        ctx.save();
 
-        ctx.fillRect(0, 0, Math.floor(this.VWIDTH), Math.floor(this.VHEIGHT));
-
-        // ctx.putImageData(imageData, 0, 0);
-
-        // var cc2d = this.copier.getContext('2d');
-            // cc2d = cc2d.drawImage(this.fabric.canvas.getContext('2d').canvas, 652, 367);
+        ctx.restore();
 
         scope.whammy.add( ctx.canvas );
 

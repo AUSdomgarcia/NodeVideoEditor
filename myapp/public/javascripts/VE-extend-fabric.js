@@ -26,8 +26,8 @@ VE.fabric.prototype = {
             break;
 
             case 'video':
-                // this.canvas.setHeight(0); // this.canvas.setHeight(180 * this.SCALE_VIDEO); <--- IBALIK
-                // this.canvas.setWidth(0); // this.canvas.setWidth(320 * this.SCALE_VIDEO); <--- IBALIK
+                this.canvas.setHeight(Math.floor(367)); // <--- IBALIK
+                this.canvas.setWidth(Math.floor(652)); // <--- IBALIK
             break;
         }
 

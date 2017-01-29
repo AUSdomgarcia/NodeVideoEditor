@@ -46,7 +46,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
                 if (VideoJS.bufferComplete === true && VideoJS.isVideoAdded === true) {
                     // just playing
-                    Fabric.canvas.renderAll();
+                    // Fabric.canvas.renderAll();
                 }
                 
                 if (VideoJS.canCaptureContext === true) {
