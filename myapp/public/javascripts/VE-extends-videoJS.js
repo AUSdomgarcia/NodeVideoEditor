@@ -26,7 +26,7 @@ VE.videoJS = function videoJS() {
     this.videoElement = null; // = document.getElementById('myvideo');
 
     this.$video = $('#myvideo');
-    this.$mainCanvas = $('#mainCanvas');
+    this.$mainCanvas = $('#mainCanvas.lower-canvas');
     this.$btnGenerate = $('.btn-generate');
 
     this.API_SUFFIX = '_html5_api';
@@ -36,6 +36,8 @@ VE.videoJS = function videoJS() {
     this.videojs = videojs('mainVideo', { 'controls': true, 'autoplay': true, 'preload': 'auto' }, function() {
         scope.addHooks();
     });
+
+    this.copier = document.getElementById('copier');
 };
 
 VE.videoJS.prototype = {
@@ -103,8 +105,11 @@ VE.videoJS.prototype = {
         this.videoElement = document.getElementById('mainVideo'.concat(this.API_SUFFIX));
 
         this.fabricVideo = new fabric.Image(this.videoElement, {
-            width: scope.VWIDTH,
-            height: scope.VHEIGHT,
+            top: 0,
+            left: 0,
+
+            width: Math.floor(scope.VWIDTH),
+            height: Math.floor(scope.VHEIGHT),
 
             hasControls: false,
             hasBorders: false,
@@ -112,18 +117,19 @@ VE.videoJS.prototype = {
             hasRotatingPoint: false,
 
             defaultCursor: 'default',
-            originY: 'top',
-            originX: 'left',
+            // originY: 'top',
+            // originX: 'left',
             // centeredScaling: true
         });
 
         this.fabric.canvas.add(this.fabricVideo);
         this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
 
-        this.fabric.canvas.setWidth(652); //Math.floor(this.VWIDTH));
-        this.fabric.canvas.setHeight(367); //Math.floor(this.VHEIGHT));
+        this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
+        this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
+        this.fabric.update();
 
-        console.log(scope.fabric.canvas.getWidth(), scope.fabric.canvas.getHeight());
+        console.log('videoAdded', this.fabric.canvas.getWidth(), this.fabric.canvas.getHeight());
     },
 
     compileWEBM: function compileWEBM() { // <_---- DITO
@@ -148,16 +154,33 @@ VE.videoJS.prototype = {
         var scope = this;
 
         console.log('now capturing');
-        var ctx = scope.$mainCanvas.get(0).getContext("2d");
-        ctx.width = 652;
-        ctx.height = 367;
 
-        // console.log(ctx);
+        // var ctx = this.$mainCanvas.get(0).getContext("2d");
+
+        this.fabric.canvas.renderAll();
+        
+        var ctx = this.fabric.canvas.getContext('2d');
+        
         // console.log('main', this.fabric.canvas.getContext('2d').canvas);
+        // console.log('getContextAvailable', Math.floor(this.VWIDTH), Math.floor(this.VHEIGHT));
+        // console.log('getContextAvailable', this.fabric.canvas.getWidth(),this.fabric.canvas.getHeight() );
         // scope.canCaptureContext = false;
         // return;
 
-        scope.whammy.add(ctx);
+        ctx.save();
+
+        // var imageData = ctx.getImageData(0, 0, Math.floor(this.VWIDTH), Math.floor(this.VHEIGHT));
+
+        ctx.fillStyle = 'white';
+
+        ctx.fillRect(0, 0, Math.floor(this.VWIDTH), Math.floor(this.VHEIGHT));
+
+        // ctx.putImageData(imageData, 0, 0);
+
+        // var cc2d = this.copier.getContext('2d');
+            // cc2d = cc2d.drawImage(this.fabric.canvas.getContext('2d').canvas, 652, 367);
+
+        scope.whammy.add( ctx.canvas );
 
         // this.whammy.add(this.fabric.canvas); //<-- DITO
     },
