@@ -1,14 +1,13 @@
 "use strict";
 
 // Window Hooks
-
-window.cancelRequestAnimFrame = (function(){
-    return  window.cancelAnimationFrame ||
-            window.webkitCancelRequestAnimationFrame ||
-            window.mozCancelRequestAnimationFrame ||
-            window.oCancelRequestAnimationFrame ||
-            window.msCancelRequestAnimationFrame ||
-            clearTimeout
+window.cancelRequestAnimFrame = (function() {
+    return window.cancelAnimationFrame ||
+        window.webkitCancelRequestAnimationFrame ||
+        window.mozCancelRequestAnimationFrame ||
+        window.oCancelRequestAnimationFrame ||
+        window.msCancelRequestAnimationFrame ||
+        clearTimeout
 })();
 
 
@@ -28,26 +27,33 @@ window.addEventListener("DOMContentLoaded", function() {
 
     // dynamicTextbox
     var dynamicTextbox = new VE.dynamicTextbox();
-        dynamicTextbox.initialTextbox();
+    dynamicTextbox.initialTextbox();
 
     // Video loaded
-    var VideoJS = new VE.videoJS();  
-        VideoJS.attachFabric(Fabric);
+    var VideoJS = new VE.videoJS();
+    VideoJS.attachFabric(Fabric);
 
-    // RequetAnimation
     var request;
-    
-    var render = function(){
-        
-        Fabric.canvas.renderAll();
 
-        if(VideoJS){
+    var render = function() {
 
-            VideoJS.getContextAvailable();
+        if (typeof Fabric !== 'object' || typeof VideoJS !== 'object') return;
 
-        }
+        VE.utils.resetFPSto(23, fabric.util.requestAnimFrame, function() {
+            
+            if (VideoJS.videojs.paused() === false) {
 
-        request = fabric.util.requestAnimFrame(render);
+                if (VideoJS.bufferComplete === true && VideoJS.isVideoAdded === true) {
+                    Fabric.canvas.renderAll();
+                }
+
+                if (VideoJS.canCaptureContext === true) {
+                    console.log('now capturing');
+                    VideoJS.getContextAvailable();
+                }
+            }
+
+        });
     };
 
     fabric.util.requestAnimFrame(render);
@@ -59,24 +65,24 @@ window.addEventListener("DOMContentLoaded", function() {
 
     var module = {
         videoModule: {
-            controllerByType: function controllerByType(type){
-               switch(type){
-                case 'image':
-                    // $('#myvideo').get(0).pause();
-                    // $('#myvideo').hide();
-                break;
-                case 'video':
-                    // $('#myvideo').get(0).play();
-                    // $('#myvideo').show();
-                break;
+            controllerByType: function controllerByType(type) {
+                switch (type) {
+                    case 'image':
+                        // $('#myvideo').get(0).pause();
+                        // $('#myvideo').hide();
+                        break;
+                    case 'video':
+                        // $('#myvideo').get(0).play();
+                        // $('#myvideo').show();
+                        break;
                 }
             }
         },
 
         UImodule: {
-            bindEvents: function bindEvents(){
+            bindEvents: function bindEvents() {
                 // Radio Button
-                $('.canvas-type').on('click','input[type="radio"]', function(evt){
+                $('.canvas-type').on('click', 'input[type="radio"]', function(evt) {
                     Fabric.setCanvasType(evt.target.value);
                     $type = evt.target.value;
 
@@ -123,7 +129,7 @@ window.addEventListener("DOMContentLoaded", function() {
         },
 
         templateModule: {
-            templatefunction: function templatefunction(){
+            templatefunction: function templatefunction() {
                 // Awesome!
             }
         }
@@ -152,7 +158,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
         alert($type);
 
-        Fabric.modifyDimension(495,495);
+        Fabric.modifyDimension(495, 495);
         Fabric.clear();
 
         $.ajax({
@@ -170,24 +176,24 @@ window.addEventListener("DOMContentLoaded", function() {
     // Document Hooks
     document.onreadystatechange = function() {
         if (document.readyState === 'complete' && typeof Fabric === 'object') {
-            
+
             // check default first
-            $('.canvas-type input[type="radio"]').each(function(evt){
-                if( $(this).is(':checked') ){
+            $('.canvas-type input[type="radio"]').each(function(evt) {
+                if ($(this).is(':checked')) {
                     $type = $(this).val();
                 }
             });
 
             module.videoModule.controllerByType($type);
-            
+
             module.UImodule.bindEvents();
 
             Fabric.setCanvasType($type);
-            
+
             Fabric.defaultText();
-            
+
             Fabric.modifyFont('Arial', 25);
-            
+
             Fabric.onResize();
 
         }
@@ -196,22 +202,22 @@ window.addEventListener("DOMContentLoaded", function() {
 
 
 
-    
 
-    // var delay = setTimeout(function() {
-    //     clearTimeout(delay);
-    //     Fabric.update();
-    // }, 5000);
 
-        // Loader.promise.post(Loader.root.concat('api/handle'), {
-        //     data: fd
-        // }, {
-        //     // 'Content-Type': 'application/json'
-        //     'Content-Type': false
-        // })
-        // .then(function(response) {
-        //         console.log(response);
-        //     })
-        //     .catch(function(error) {
-        //         if (error) throw error;
-        //     });
+// var delay = setTimeout(function() {
+//     clearTimeout(delay);
+//     Fabric.update();
+// }, 5000);
+
+// Loader.promise.post(Loader.root.concat('api/handle'), {
+//     data: fd
+// }, {
+//     // 'Content-Type': 'application/json'
+//     'Content-Type': false
+// })
+// .then(function(response) {
+//         console.log(response);
+//     })
+//     .catch(function(error) {
+//         if (error) throw error;
+//     });

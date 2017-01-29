@@ -18,7 +18,7 @@ VE.video.prototype = {
         this.canvas = canvas;
         this.group = VE.utils.overlayGroup(canvas);
     },
-
+    
     onReady: function onReady(callback){
     	var scope = this;
     	var currTime = 0;

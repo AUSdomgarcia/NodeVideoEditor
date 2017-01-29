@@ -21,26 +21,33 @@
 					<ul class="videoList"></ul>
 				</div>
 
-				<div class="canvas-container">
+				<div class="viewer-container">
 					<div class="two">
+						
 						<div class="col-xs-6">
-							<video id="mainVideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid">
+							<video id="mainVideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" muted>
 								<source src="videos/vid1.mp4" type="video/mp4" />
 							</video>
 						</div>
+
 						<div class="col-xs-6">
 							<h3>Wait until video was loaded.</h3>	
-							<a href='javascript:void(0)' class='btn-generate btn btn-primary'>Generate .WEBM</a>						
+							<a href='javascript:void(0)' class='btn-generate btn btn-primary'>Generate .WEBM</a>		
 						</div>
+
 					</div>
 
 					<div class="clearfix"></div>
-					<canvas id="mainCanvas"></canvas>
+					
+					<div class="wrapper">
+						<h3 id="loader-status" style="padding: 10px;margin:0px;">Loading resources..</h3>
+						<canvas id="mainCanvas"></canvas>
+					</div>
 
-					<br/>
-					<br/>
+					<canvas id="myCanvas1"></canvas>
 
-					<video id='whammyCompile' autoplay></video>
+					<video id="awesome" width="150" height="150" controls autoplay loop></video>
+				
 				</div>
 
 				<div class="clearfix"></div>
@@ -88,6 +95,7 @@
 			<button class="exportBtn btn btn-default">Export</button>
 
 			<canvas id="dynamic-canvas"></canvas>
+
 		</div>
 
 		<footer>

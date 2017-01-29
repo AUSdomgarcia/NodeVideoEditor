@@ -18,7 +18,7 @@ body {
 	width: 100%;
 	max-width: 1100px;
 	min-height: 500px;
-	border:1px solid red;
+	border:1px solid #aaa;
 	margin: 0 auto;
 }
 
@@ -26,7 +26,7 @@ body {
 	box-sizing: border-box;
 	width: 20%;
 	height: 100%;
-	border:1px solid blue;
+	border:1px solid #aaa;
 	float: left;
 }
 
@@ -34,23 +34,23 @@ body {
 	box-sizing: border-box;
 	width: 20%;
 	height: 100%;
-	border:1px solid blue;
+	border:1px solid #aaa;
 	float: right;
 }
 
-.canvas-container {
+.viewer-container {
 	box-sizing: border-box;
 	float: left;
 	position: relative;
 	width: 60%;
-	height: 100%;
-	border:1px dashed yellow;
+	min-height: 10px;
+	background-color: #aaa;
 }
 
 .hashtag, .name, .dynamic {
 	padding: 10px 10px 5px;
 	width: 100%;
-	border:1px solid red;
+	border:1px solid #aaa;
 }
 .hashtag input[type="text"],
 .name input[type="text"] {
