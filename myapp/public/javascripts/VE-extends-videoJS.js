@@ -60,8 +60,7 @@ VE.videoJS.prototype = {
 
         this.videojs.on('ended', function() {
 
-            console.log('done!');
-            console.log(scope.fabric.canvas.getHeight(),scope.fabric.canvas.getWidth());
+            console.log('video ended!');
 
             if (scope.videojs.currentTime() >= scope.VIDEO_DURATION && scope.isVideoAdded === false && scope.bufferComplete === false) {
                 scope.isVideoAdded = true;
@@ -117,21 +116,14 @@ VE.videoJS.prototype = {
             originX: 'left',
             // centeredScaling: true
         });
-        
-        // this.fabric.canvas.add(this.fabricVideo);
-        // this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
-    
-        // this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
-        // this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
 
-        // this.$mainCanvas.width(Math.floor(this.VWIDTH));
-        // this.$mainCanvas.height(Math.floor(this.VHEIGHT));
+        this.fabric.canvas.add(this.fabricVideo);
+        this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
 
-        // this.fabric.canvas.setWidth(Math.floor(400));
-        // this.fabric.canvas.setHeight(Math.floor(400));
+        this.fabric.canvas.setWidth(652); //Math.floor(this.VWIDTH));
+        this.fabric.canvas.setHeight(367); //Math.floor(this.VHEIGHT));
 
-        // this.$mainCanvas.width(Math.floor(400));
-        // this.$mainCanvas.height(Math.floor(400));
+        console.log(scope.fabric.canvas.getWidth(), scope.fabric.canvas.getHeight());
     },
 
     compileWEBM: function compileWEBM() { // <_---- DITO
@@ -149,31 +141,38 @@ VE.videoJS.prototype = {
         this.whammy.compile(false, function(output) { // <--- The problem was fabric do not have defined width height
             var url = webkitURL.createObjectURL(output);
             document.getElementById('awesome').src = url;
-        });        
+        });
     },
 
     getContextAvailable: function getContextAvailable() {
         var scope = this;
-        console.log('main', this.fabric.canvas.getContext('2d').canvas);
-        scope.canCaptureContext = false;
-        return;
 
         console.log('now capturing');
+        var ctx = scope.$mainCanvas.get(0).getContext("2d");
+        ctx.width = 652;
+        ctx.height = 367;
 
-        this.whammy.add(this.fabric.canvas); //<-- DITO
+        // console.log(ctx);
+        // console.log('main', this.fabric.canvas.getContext('2d').canvas);
+        // scope.canCaptureContext = false;
+        // return;
+
+        scope.whammy.add(ctx);
+
+        // this.whammy.add(this.fabric.canvas); //<-- DITO
     },
 
-    clock: function clock(time){
+    clock: function clock(time) {
         var now = new Date();
-        
+
         now.setTime(time);
         var ctx = document.getElementById('dynamic-canvas').getContext('2d');
         ctx.save();
         ctx.fillStyle = 'white'
-        ctx.fillRect(0,0,150,150); // videos cant handle transprency
-        ctx.translate(75,75);
-        ctx.scale(0.4,0.4);
-        ctx.rotate(-Math.PI/2);
+        ctx.fillRect(0, 0, 150, 150); // videos cant handle transprency
+        ctx.translate(75, 75);
+        ctx.scale(0.4, 0.4);
+        ctx.rotate(-Math.PI / 2);
         ctx.strokeStyle = "black";
         ctx.fillStyle = "white";
         ctx.lineWidth = 8;
@@ -181,11 +180,11 @@ VE.videoJS.prototype = {
 
         // Hour marks
         ctx.save();
-        for (var i=0;i<12;i++){
+        for (var i = 0; i < 12; i++) {
             ctx.beginPath();
-            ctx.rotate(Math.PI/6);
-            ctx.moveTo(100,0);
-            ctx.lineTo(120,0);
+            ctx.rotate(Math.PI / 6);
+            ctx.moveTo(100, 0);
+            ctx.lineTo(120, 0);
             ctx.stroke();
         }
         ctx.restore();
@@ -194,69 +193,69 @@ VE.videoJS.prototype = {
         ctx.save();
         ctx.lineWidth = 5;
 
-        for (i=0;i<60;i++){
-            if (i%5!=0) {
+        for (i = 0; i < 60; i++) {
+            if (i % 5 != 0) {
                 ctx.beginPath();
-                ctx.moveTo(117,0);
-                ctx.lineTo(120,0);
+                ctx.moveTo(117, 0);
+                ctx.lineTo(120, 0);
                 ctx.stroke();
             }
-            ctx.rotate(Math.PI/30);
+            ctx.rotate(Math.PI / 30);
         }
         ctx.restore();
 
         var sec = now.getSeconds();
         var min = now.getMinutes();
-        var hr  = now.getHours();
-        hr = hr>=12 ? hr-12 : hr;
+        var hr = now.getHours();
+        hr = hr >= 12 ? hr - 12 : hr;
 
         ctx.fillStyle = "black";
 
         // write Hours
         ctx.save();
-        ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec )
+        ctx.rotate(hr * (Math.PI / 6) + (Math.PI / 360) * min + (Math.PI / 21600) * sec)
         ctx.lineWidth = 14;
         ctx.beginPath();
-        ctx.moveTo(-20,0);
-        ctx.lineTo(80,0);
+        ctx.moveTo(-20, 0);
+        ctx.lineTo(80, 0);
         ctx.stroke();
         ctx.restore();
 
         // write Minutes
         ctx.save();
-        ctx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec )
+        ctx.rotate((Math.PI / 30) * min + (Math.PI / 1800) * sec)
         ctx.lineWidth = 10;
         ctx.beginPath();
-        ctx.moveTo(-28,0);
-        ctx.lineTo(112,0);
+        ctx.moveTo(-28, 0);
+        ctx.lineTo(112, 0);
         ctx.stroke();
         ctx.restore();
 
         // Write seconds
         ctx.save();
-        ctx.rotate(sec * Math.PI/30);
+        ctx.rotate(sec * Math.PI / 30);
         ctx.strokeStyle = "#D40000";
         ctx.fillStyle = "#D40000";
         ctx.lineWidth = 6;
         ctx.beginPath();
-        ctx.moveTo(-30,0);
-        ctx.lineTo(83,0);
+        ctx.moveTo(-30, 0);
+        ctx.lineTo(83, 0);
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(0,0,10,0,Math.PI*2,true);
+        ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(95,0,10,0,Math.PI*2,true);
+        ctx.arc(95, 0, 10, 0, Math.PI * 2, true);
         ctx.stroke();
         ctx.fillStyle = "#555";
-        ctx.arc(0,0,3,0,Math.PI*2,true);
+        ctx.arc(0, 0, 3, 0, Math.PI * 2, true);
         ctx.fill();
         ctx.restore();
 
         ctx.beginPath();
         ctx.lineWidth = 14;
         ctx.strokeStyle = '#325FA2';
-        ctx.arc(0,0,142,0,Math.PI*2,true);
+        ctx.arc(0, 0, 142, 0, Math.PI * 2, true);
         ctx.stroke();
 
         ctx.restore();
