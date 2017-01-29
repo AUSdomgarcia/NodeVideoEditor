@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<title>Video Editor</title>
+
+	<head>
+		<link rel="stylesheet" href="./vendors/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./vendors/css/bootstrap.min.css">
+<link rel="stylesheet" href="./vendors/css/video-js.css">
+
+<link rel="stylesheet" href="./stylesheets/style.css">
+
+<link rel="stylesheet" href="./font/styles.css">
+	</head>
+
+	<body>
+		<h1>Video Editor</h1>
+
+		<div class="main">
+
+			<div class="editor-container">
+
+				<div class="template-overlay-controls">
+					<ul class="overlayList"></ul>
+				</div>
+
+				<div class="template-video-controls">
+					<ul class="videoList"></ul>
+				</div>
+
+				<div class="viewer-container">
+					<div class="two">
+						
+						<div class="col-xs-6">
+							<video id="mainVideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" muted>
+								<source src="videos/vid1.mp4" type="video/mp4" />
+							</video>
+						</div>
+
+						<div class="col-xs-6">
+							<h3>Wait until video was loaded.</h3>	
+							<a href='javascript:void(0)' class='btn-generate btn btn-primary'>Generate .WEBM</a>		
+						</div>
+
+					</div>
+
+					<div class="clearfix"></div>
+					
+					<div class="wrapper">
+						<h3 id="loader-status" style="padding: 10px;margin:0px;">Loading resources..</h3>
+						<canvas id="mainCanvas"></canvas>
+					</div>
+
+					<canvas id="myCanvas1"></canvas>
+
+					<video id="awesome" width="150" height="150" controls autoplay loop></video>
+				
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+
+			<br />
+				 
+			<div class="interact-controls container">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input id="nameInput" name="username" class="form-control" type="text">
+						</div>
+
+						<div class="form-group">
+							<label for="username">Hashtag</label>
+							<input id="hashtagInput" name="username" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="canvas-type col-md-4">
+						<h3>Canvas Type</h3>
+						<label><input type="radio" name="canvas_type" value="image" >&nbsp;Image</label>
+						<br />
+						<label><input type="radio" name="canvas_type" value="video" checked>&nbsp;Video</label>
+					</div>
+
+					<div class="col-md-4">
+						<div class="row">
+							<h3>Fonts Available</h3>
+						</div>
+						<div class="row">
+							<h3>Hello</h3>
+							<ul id="dynamic-textbox"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class='dynamic'>
+				<p>Dynamic Input</p>
+			</div>
+
+			<button class="exportBtn btn btn-default">Export</button>
+
+			<canvas id="dynamic-canvas"></canvas>
+
+		</div>
+
+		<footer>
+	       <script src="./vendors/js/jquery-1.9.1.min.js"></script>
+<script src="./vendors/js/bootstrap.min.js"></script>
+<script src="./vendors/js/fabric.min.js"></script>
+
+
+<script src="./vendors/js/whammy.js"></script>
+<!-- <script src="./vendors/js/whammy.v1.js"></script> -->
+
+
+<!--https://github.com/mzabriskie/axios-->
+
+<script src="./vendors/js/axios.min.js"></script>
+
+<script src="./vendors/js/video-js.min.js"></script>
+
+<script src="./javascripts/VE-extend-fabric.js"></script>
+<script src="./javascripts/VE-keyboard.js"></script>
+<script src="./javascripts/VE-loaders.js"></script>
+<script src="./javascripts/VE-text.js"></script>
+<script src="./javascripts/VE-utils.js"></script>
+<script src="./javascripts/VE-dynamic-textbox.js"></script>
+
+<!--<script src="./javascripts/VE-video.js"></script>-->
+
+<script src="./javascripts/VE-extends-videoJS.js"></script>
+
+<script src="./javascripts/main.js"></script>
+
+	    </footer>
+	</body>
+
+</html>
+
+<!-- <video id="myvideo" crossOrigin="anonymous" autoplay muted> -->
+	<!-- <source src="videos/vid1.mp4" type="video/mp4" /> -->
+	<!-- <source src="videos/vid1.webm" type="video/webm" /> -->
+	<!-- Your browser does not support the video tag. -->
+	<!-- <source src="videos/vid1.ogg" type="video/ogg"> -->
+	<!-- <source src="videos/vid1.webm" type="video/webm"> -->
+<!-- </video> -->
+	
