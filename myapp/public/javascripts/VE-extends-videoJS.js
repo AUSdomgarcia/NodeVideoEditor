@@ -26,12 +26,13 @@ VE.videoJS = function videoJS() {
     this.videoElement = null; // = document.getElementById('myvideo');
 
     this.$video = $('#myvideo');
+    this.$mainCanvas = $('#mainCanvas');
     this.$btnGenerate = $('.btn-generate');
 
     this.API_SUFFIX = '_html5_api';
 
-    // this.whammy = new Whammy.Video(23); <--- DITO
-    
+    this.whammy = new Whammy.Video(23); //<--- DITO
+
     this.videojs = videojs('mainVideo', { 'controls': true, 'autoplay': true, 'preload': 'auto' }, function() {
         scope.addHooks();
     });
@@ -99,9 +100,6 @@ VE.videoJS.prototype = {
             this.VHEIGHT = this.HEIGHT;
         }
 
-        this.fabric.canvas.setWidth(this.VWIDTH);
-        this.fabric.canvas.setHeight(this.VHEIGHT);
-
         this.videoElement = document.getElementById('mainVideo'.concat(this.API_SUFFIX));
 
         this.fabricVideo = new fabric.Image(this.videoElement, {
@@ -118,44 +116,59 @@ VE.videoJS.prototype = {
             originX: 'left',
             // centeredScaling: true
         });
-
+        
         this.fabric.canvas.add(this.fabricVideo);
         this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
+    
+        this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
+        this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
+
+        this.$mainCanvas.width(Math.floor(this.VWIDTH));
+        this.$mainCanvas.height(Math.floor(this.VHEIGHT));
+
+        console.log('w',this.$mainCanvas.width(),'h',this.fabric.canvas.getHeight())
     },
 
     compileWEBM: function compileWEBM() { // <_---- DITO
         var scope = this;
-        var video = new Whammy.Video(23);
-        var last_time = +new Date;
-        var context = this.clock(last_time += 1000);
-        video.add( context );
-        video.compile(false, function(output) {
-            var url = webkitURL.createObjectURL(output);
-            document.getElementById('awesome').src = url;
-        });
 
-        // this.whammy.compile(false, function(output) {
+        // var video = new Whammy.Video(23);
+        // var last_time = +new Date;
+        // var context = this.clock(last_time += 1000);
+        // video.add( context );
+        // video.compile(false, function(output) {
         //     var url = webkitURL.createObjectURL(output);
         //     document.getElementById('awesome').src = url;
-        // });        
+        // });
+
+        this.whammy.compile(false, function(output) { // <--- The problem was fabric do not have defined width height
+            var url = webkitURL.createObjectURL(output);
+            document.getElementById('awesome').src = url;
+        });        
     },
 
     getContextAvailable: function getContextAvailable() {
         var scope = this;
-        console.log('now capturing');
-        // console.log(this.fabric.canvas.getContext('2d'));
-        // this.whammy.add(this.fabric.canvas.getContext('2d').canvas);
+        
+        this.$mainCanvas.width(Math.floor(this.VWIDTH));
+        this.$mainCanvas.height(Math.floor(this.VHEIGHT));
+
+        this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
+        this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
+
+        // console.log('main', this.fabric.canvas.getContext('2d').canvas);
         // scope.canCaptureContext = false;
         // return;
+        // console.log('now capturing', this.fabric.canvas.getHeight(), this.fabric.canvas.getWidth(), this.fabric.canvas.getContext('2d').canvas);
 
-        // this.whammy.add(this.fabric.canvas);
+        this.whammy.add(this.fabric.canvas.getContext('2d')); //<-- DITO
     },
 
     clock: function clock(time){
         var now = new Date();
         
         now.setTime(time);
-        var ctx = document.getElementById('myCanvas1').getContext('2d');
+        var ctx = document.getElementById('dynamic-canvas').getContext('2d');
         ctx.save();
         ctx.fillStyle = 'white'
         ctx.fillRect(0,0,150,150); // videos cant handle transprency

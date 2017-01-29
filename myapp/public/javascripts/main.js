@@ -48,7 +48,6 @@ window.addEventListener("DOMContentLoaded", function() {
                 }
 
                 if (VideoJS.canCaptureContext === true) {
-                    console.log('now capturing');
                     VideoJS.getContextAvailable();
                 }
             }
