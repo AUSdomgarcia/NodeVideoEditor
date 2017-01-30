@@ -1,19 +1,25 @@
 var VE = window.VE || {};
 
-VE.Text = function Text(caption) {
+VE.Text = function Text(idRef, fontRef, fontSizeRef, textRef) {
     var scope = this;
 
     this.$canvasContainer = $('.canvas-container');
 
-    this.textbox = new fabric.Textbox(caption, {
-        width: 300,
+    this.textbox = new fabric.Textbox( textRef, {
+
+        id: idRef,
+
+        width: 200,
         top: 0,
         left: 0,
-        fontSize: 18,
-        fontFamily: 'sans',
+        fontSize: fontSizeRef,
+        
+        fontFamily: fontRef,
+
         textAlign: 'center',
         breakWords: true,
         lineHeight: 0.8,
+
         // fontFamily: 'DancingintheMoonlight',
         // hasControls: false,
         // hasBorders: false,
@@ -35,6 +41,11 @@ VE.Text = function Text(caption) {
 };
 
 VE.Text.prototype = {
+
+    getId: function getId(){
+        return this.textbox.id;
+    },
+
     setTopLeft: function setTopLeft(top, left) {
         this.textbox.setTop(top);
         this.textbox.setLeft(left);

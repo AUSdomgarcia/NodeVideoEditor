@@ -15,26 +15,67 @@ VE.fabric = function Fabric(opts) {
     this.canvas.add(this.group);
 
     this.textArr = [];
+
+    this.videoJS = null;
+
+    this.HEIGHT = Math.floor(900 * this.SCALE_IMAGE);
+    this.WIDTH = Math.floor(900 * this.SCALE_IMAGE);
+
+    this.data = [{ text:"Sample", id: 0 }];
 };
 
 VE.fabric.prototype = {
+
+    deleteById: function deleteById(id){
+        // 
+    },
+
+    getTextboxId: function getTextboxId(id, fonts, fontsize, text){
+        var scope = this;
+
+        this.DTextbox = new VE.Text(id, fonts, fontsize, text);
+
+        this.textArr.push.apply(this.textArr, [this.DTextbox]);
+
+        this.canvas.add(this.DTextbox.textbox);
+
+        this.canvas.setActiveObject(this.DTextbox.textbox);
+
+        this.canvas.renderAll();
+
+        return scope.DTextbox.getId();
+    },
+
+    selectObjectById: function selectObjectById(){
+        // 
+    },
+
+    attachVideoJS: function attachVideoJS(plugin){
+        var scope = this;
+        this.videoJS = plugin;        
+    },
+
     setCanvasType: function setCanvasType(type){
+        var scope = this;
+
         switch(type){
             case 'image':
-                this.canvas.setHeight(Math.floor(900 * this.SCALE_IMAGE)); // <--- IBALIK
-                this.canvas.setWidth(Math.floor(900 * this.SCALE_IMAGE)); // <--- IBALIK
+                this.canvas.setHeight(this.HEIGHT); // <--- IBALIK
+                this.canvas.setWidth(this.WIDTH); // <--- IBALIK
+                
+                // DISABLE VIDEO EVENTS AND DISPLAY
+                this.videoJS.videojs.pause();
+                this.videoJS.$two.hide();
+                this.videoJS.$loaderStatus.hide();
             break;
 
             case 'video':
-                this.canvas.setHeight(Math.floor(367)); // <--- IBALIK
-                this.canvas.setWidth(Math.floor(652)); // <--- IBALIK
+                // this.canvas.setHeight(Math.floor(367)); // <--- IBALIK
+                // this.canvas.setWidth(Math.floor(652)); // <--- IBALIK
+                this.videoJS.$loaderStatus.show();
+                this.videoJS.$two.show();
             break;
         }
-
-        this.HEIGHT = this.canvas.getHeight();
-        this.WIDTH = this.canvas.getWidth();
-
-        this.update();
     },
 
     modifyFont: function modifyFont(fontface, fontsize){
@@ -46,23 +87,23 @@ VE.fabric.prototype = {
     defaultText: function defaultText() {
         var scope = this;
         // instance
-        this.name = new VE.Text('Sunsilk PH');
-        this.hashtag = new VE.Text('#SomeHashtagGoals');
+        // this.name = new VE.Text('Sunsilk PH');
+        // this.hashtag = new VE.Text('#SomeHashtagGoals');
 
-        this.textArr.push.apply(this.textArr, [this.name, this.hashtag]);
+        // this.textArr.push.apply(this.textArr, [this.name, this.hashtag]);
 
         // Coord
-        var offset = -14;
-        var itr = 0;
+        // var offset = -14;
+        // var itr = 0;
 
-        this.textArr.map(function(el){
-            el.modifyWidth(125);
-            el.setTopLeft(150 * itr, ( (scope.WIDTH/2) - (scope.name.WIDTH/2) + offset) );
-            scope.canvas.add(el.textbox);
-            itr++;
-        });
+        // this.textArr.map(function(el){
+        //     el.modifyWidth(125);
+        //     el.setTopLeft(150 * itr, ( (scope.WIDTH/2) - (scope.name.WIDTH/2) + offset) );
+        //     scope.canvas.add(el.textbox);
+        //     itr++;
+        // });
 
-        this.canvas.renderAll();
+        // this.canvas.renderAll();
     },
 
     getText : function getText(text){
@@ -80,7 +121,7 @@ VE.fabric.prototype = {
         }
     },
 
-    clear :function clear(){
+    clear: function clear(){
         var objects = this.canvas.getObjects();
         for (var i in objects) {
             delete objects[i];
@@ -95,8 +136,7 @@ VE.fabric.prototype = {
         } else {
           this.canvas.remove(this.canvas.getActiveObject());
         }
-
-        console.log( this.canvas.getObjects() )
+        this.update();
     },
 
     loadImage: function loadImage(opts) {
@@ -104,17 +144,19 @@ VE.fabric.prototype = {
         this.url = opts.url;
 
         var requestImg = new fabric.Image.fromURL(this.url, function(loadedImg) {
+            alert('Image Loaded!');
+
             // config
             loadedImg.set({
                 left: 0,
                 top: 0,
-                height: scope.HEIGHT,
-                width: scope.WIDTH
+                height: scope.canvas.getHeight(),
+                width: scope.canvas.getWidth()
             });
 
-            if (!scope.canvas.contains(scope.group)) {
-                scope.group.addWithUpdate(loadedImg);
-            } else {
+            // if (!scope.canvas.contains(scope.group)) {
+                // scope.group.addWithUpdate(loadedImg);
+            // } else {
 
                 scope.group.addWithUpdate(loadedImg);
 
@@ -123,7 +165,8 @@ VE.fabric.prototype = {
                 });
 
                 scope.removeOverlay();
-            }
+            
+            // }
 
             scope.canvas.renderAll();
             
@@ -141,6 +184,13 @@ VE.fabric.prototype = {
 
     update: function update(){
         this.canvas.renderAll();
+    },
+
+    returnInitialSize: function returnInitialSize(){
+        var scope = this;
+
+        this.canvas.setHeight(this.HEIGHT);
+        this.canvas.setWidth(this.WIDTH);
     },
 
     modifyDimension : function modifyDimension(w,h){

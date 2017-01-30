@@ -37,7 +37,9 @@ VE.videoJS = function videoJS() {
         scope.addHooks();
     });
 
-    this.copier = document.getElementById('copier');
+    this.$two = $('.two');
+    this.$loaderStatus = $('#loader-status');
+
 };
 
 VE.videoJS.prototype = {
@@ -122,13 +124,17 @@ VE.videoJS.prototype = {
             // centeredScaling: true
         });
 
-        this.fabric.canvas.add(this.fabricVideo);
-        this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
-
         this.fabric.canvas.setWidth(Math.floor(this.VWIDTH));
         this.fabric.canvas.setHeight(Math.floor(this.VHEIGHT));
-        this.fabric.update();
 
+        // this.fabric.group.addWithUpdate(this.fabricVideo);
+        // this.fabric.canvas.renderAll();
+        
+        console.log(this.fabric.group);
+
+        this.fabric.canvas.add(this.fabricVideo);
+        this.fabric.canvas.sendToBack(this.fabricVideo); // <-- then send to back
+        
         console.log('videoAdded', this.fabric.canvas.getWidth(), this.fabric.canvas.getHeight());
     },
 
@@ -154,27 +160,30 @@ VE.videoJS.prototype = {
         var scope = this;
 
         console.log('now capturing');
-
-        // var ctx = this.$mainCanvas.get(0).getContext("2d");
-
-        this.fabric.canvas.renderAll();
-
-        var ctx = this.fabric.canvas.getContext('2d');
+        
+        var ctx = this.$mainCanvas.get(0).getContext("2d");
         
         // console.log('main', this.fabric.canvas.getContext('2d').canvas);
         // console.log('getContextAvailable', Math.floor(this.VWIDTH), Math.floor(this.VHEIGHT));
         // console.log('getContextAvailable', this.fabric.canvas.getWidth(),this.fabric.canvas.getHeight() );
+        
         // scope.canCaptureContext = false;
         // return;
-
-        var imageData = ctx.getImageData(0, 0, Math.floor(this.fabric.canvas.getWidth() - 10), Math.floor(this.fabric.canvas.getHeight()) - 10);
         
-        ctx.fillRect(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
+        this.fabric.canvas.renderAll();
 
-        ctx.fillStyle = ctx.putImageData(imageData, 5, 5);
-        ctx.save();
+        // var ctx = this.fabric.canvas.getContext('2d');
+
+        // var imageData = ctx.getImageData(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
         
-        scope.whammy.add(ctx.canvas);
+        // ctx.fillRect(0, 0, Math.floor(this.fabric.canvas.getWidth()), Math.floor(this.fabric.canvas.getHeight()));
+
+        // ctx.fillStyle = ctx.putImageData(imageData, 0, 0);
+        // ctx.save();
+        
+        // scope.whammy.add(ctx.canvas);
+
+        scope.whammy.add(this.fabric.canvas);
 
         // this.whammy.add(this.fabric.canvas); //<-- DITO
     },

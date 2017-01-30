@@ -57,3 +57,11 @@ body {
 	display: block;
 }
 
+.wrapper {
+	background-color: #bbb;
+	border:1px solid #999;
+}
+
+canvas#mainCanvas {
+	background-color: #fff;
+}

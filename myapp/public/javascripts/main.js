@@ -16,6 +16,21 @@ window.addEventListener("DOMContentLoaded", function() {
     VE.utils.Prototype_WrapLine();
     VE.utils.Prototype_GetName();
 
+    fabric.Canvas.prototype.getItemByMyID = function(myID) {
+    var object = null,
+        objects = this.getObjects();
+    for (var i = 0, len = this.size(); i < len; i++) {
+        if (objects[i].id&& objects[i].id=== myID) {
+            object = objects[i];
+            break;
+        }
+    }
+    return object;
+};
+
+
+    fabric.Object.prototype.objectCaching = false;
+
     var $type = null;
 
     // Main Fabric
@@ -25,13 +40,17 @@ window.addEventListener("DOMContentLoaded", function() {
     var Loader = new VE.loader({ root: 'http://sunsilk.storyteching.ph/', apiURL: 'http://sunsilk.storyteching.ph/api/template' });
     Loader.attachFabric(Fabric);
 
-    // dynamicTextbox
-    var dynamicTextbox = new VE.dynamicTextbox();
-    dynamicTextbox.initialTextbox();
+    // TextBoxController
+    var TextBoxController = new VE.TextBoxController();
+    TextBoxController.attachFabric(Fabric);
+    TextBoxController.initialTextbox();
 
     // Video loaded
     var VideoJS = new VE.videoJS();
     VideoJS.attachFabric(Fabric);
+
+    // Attach VideoJS
+    Fabric.attachVideoJS(VideoJS);
 
     var request;
 
@@ -142,25 +161,28 @@ window.addEventListener("DOMContentLoaded", function() {
 
         //http://stackoverflow.com/questions/33716349/clone-canvas-with-fabric-js-and-continue-editing
 
-        Fabric.zoomIt(1.65); // to achieve size 898x898
+        if($type==='image'){
+            Fabric.zoomIt(2); // to achieve size 898x898
+        }
 
         var dataURL = Fabric.canvas.toDataURL("image/png");
-
         var blob = VE.utils.toBlob(dataURL);
-
         var fd = new FormData();
 
+        // fd.append('video', blob, 'any');
         fd.append('image', blob, 'any');
-        fd.append('hashtag', Fabric.hashtag.textbox.getText());
-        fd.append('name', Fabric.name.textbox.getText());
+        
+        // fd.append('hashtag', Fabric.hashtag.textbox.getText());
+        // fd.append('name', Fabric.name.textbox.getText());
+
         fd.append('overlay_template_id', Loader.overlayId);
         fd.append('video_template_id', Loader.videoId);
         fd.append('output_type', $type);
 
-        alert($type);
-
-        Fabric.modifyDimension(495, 495);
-        Fabric.clear();
+        if($type==='image'){
+            Fabric.zoomIt(1.0);
+            Fabric.zoomIt(0.5);
+        }
 
         $.ajax({
             type: 'POST',
@@ -170,7 +192,6 @@ window.addEventListener("DOMContentLoaded", function() {
             contentType: false
         }).done(function(data) {
             console.log('JeffreyWayOfResponse:', data);
-
         });
     });
 
