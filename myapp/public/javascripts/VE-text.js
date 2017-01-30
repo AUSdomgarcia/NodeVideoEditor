@@ -1,11 +1,12 @@
 var VE = window.VE || {};
 
-VE.Text = function Text(idRef, fontRef, fontSizeRef, textRef) {
+VE.Text = function Text(idRef, fontRef, fontSizeRef, colorRef, lineHeightRef, textRef) {
+
     var scope = this;
 
     this.$canvasContainer = $('.canvas-container');
 
-    this.textbox = new fabric.Textbox( textRef, {
+    this.textbox = new fabric.Textbox(textRef, {
 
         id: idRef,
 
@@ -13,12 +14,15 @@ VE.Text = function Text(idRef, fontRef, fontSizeRef, textRef) {
         top: 0,
         left: 0,
         fontSize: fontSizeRef,
-        
+
         fontFamily: fontRef,
 
         textAlign: 'center',
         breakWords: true,
-        lineHeight: 0.8,
+        
+        lineHeight: lineHeightRef || 0.8,
+        
+        editable: false,
 
         // fontFamily: 'DancingintheMoonlight',
         // hasControls: false,
@@ -36,13 +40,15 @@ VE.Text = function Text(idRef, fontRef, fontSizeRef, textRef) {
         targetFindTolerance: 4,
     });
 
+    this.textbox.set({ fill: '#' + colorRef })
+
     this.HEIGHT = this.textbox.getHeight();
     this.WIDTH = this.textbox.getWidth();
 };
 
 VE.Text.prototype = {
 
-    getId: function getId(){
+    getId: function getId() {
         return this.textbox.id;
     },
 
@@ -51,18 +57,18 @@ VE.Text.prototype = {
         this.textbox.setLeft(left);
     },
 
-    modifyWidth: function modifyWidth(value){
+    modifyWidth: function modifyWidth(value) {
         this.textbox.setWidth(value);
         this.WIDTH = this.textbox.getWidth();
     },
 
-    modifyFont: function modifyFont(fontface, fontsize){
+    modifyFont: function modifyFont(fontface, fontsize) {
         this.textbox.fontFamily = fontface;
         this.textbox.fontSize = fontsize;
     },
 
     onResize: function onResize() {
-        if(this.HEIGHT !== 0 && this.WIDTH !== 0){
+        if (this.HEIGHT !== 0 && this.WIDTH !== 0) {
             this.textbox.setHeight(this.HEIGHT);
             this.textbox.setWidth(this.WIDTH);
         }

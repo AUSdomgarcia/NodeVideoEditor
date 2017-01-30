@@ -1,7 +1,29 @@
 
-@font-face {
+/*@font-face {
   font-family: 'DancingintheMoonlight';
   src: url('DancingintheMoonlight.eot?#iefix') format('embedded-opentype'),  url('DancingintheMoonlight.woff') format('woff'), url('DancingintheMoonlight.ttf')  format('truetype'), url('DancingintheMoonlight.svg#DancingintheMoonlight') format('svg');
   font-weight: normal;
   font-style: normal;
+}*/
+
+@font-face {
+  font-family: 'Marquee';
+  src: url('Marquee.eot?#iefix') format('embedded-opentype'),  url('Marquee.woff') format('woff'), url('Marquee.ttf')  format('truetype'), url('Marquee.svg#Marquee') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'FortunaDot';
+  src: url('FortunaDot.eot?#iefix') format('embedded-opentype'),  url('FortunaDot.woff') format('woff'), url('FortunaDot.ttf')  format('truetype'), url('FortunaDot.svg#FortunaDot') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BeadChain';
+  src: url('BeadChain.eot?#iefix') format('embedded-opentype'),  url('BeadChain.woff') format('woff'), url('BeadChain.ttf')  format('truetype'), url('BeadChain.svg#BeadChain') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

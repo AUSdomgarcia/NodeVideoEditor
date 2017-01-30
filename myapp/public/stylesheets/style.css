@@ -47,11 +47,12 @@ body {
 	background-color: #aaa;
 }
 
-.hashtag, .name, .dynamic {
+.hashtag, .name {
 	padding: 10px 10px 5px;
 	width: 100%;
 	border:1px solid #aaa;
 }
+
 .hashtag input[type="text"],
 .name input[type="text"] {
 	display: block;

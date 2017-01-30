@@ -170,13 +170,16 @@ window.addEventListener("DOMContentLoaded", function() {
         var fd = new FormData();
 
         // fd.append('video', blob, 'any');
-        fd.append('image', blob, 'any');
+        
+        fd.append($type, blob, 'any');
         
         // fd.append('hashtag', Fabric.hashtag.textbox.getText());
         // fd.append('name', Fabric.name.textbox.getText());
 
         fd.append('overlay_template_id', Loader.overlayId);
+        
         fd.append('video_template_id', Loader.videoId);
+        
         fd.append('output_type', $type);
 
         if($type==='image'){
@@ -214,16 +217,13 @@ window.addEventListener("DOMContentLoaded", function() {
 
             Fabric.defaultText();
 
-            Fabric.modifyFont('Arial', 25);
+            // Fabric.modifyFont('Arial', 25);
 
             Fabric.onResize();
 
         }
     };
 });
-
-
-
 
 
 // var delay = setTimeout(function() {

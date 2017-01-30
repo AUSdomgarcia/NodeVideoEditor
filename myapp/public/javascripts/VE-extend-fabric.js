@@ -30,10 +30,10 @@ VE.fabric.prototype = {
         // 
     },
 
-    getTextboxId: function getTextboxId(id, fonts, fontsize, text){
+    getTextboxId: function getTextboxId(id, fonts, fontsize, color, lineHeight, text){
         var scope = this;
 
-        this.DTextbox = new VE.Text(id, fonts, fontsize, text);
+        this.DTextbox = new VE.Text(id, fonts, fontsize, color, lineHeight, text);
 
         this.textArr.push.apply(this.textArr, [this.DTextbox]);
 
@@ -78,11 +78,11 @@ VE.fabric.prototype = {
         }
     },
 
-    modifyFont: function modifyFont(fontface, fontsize){
-        this.textArr.map(function(el){
-            el.modifyFont(fontface, fontsize);
-        });
-    },
+    // modifyFont: function modifyFont(fontface, fontsize){
+    //     this.textArr.map(function(el){
+    //         el.modifyFont(fontface, fontsize);
+    //     });
+    // },
 
     defaultText: function defaultText() {
         var scope = this;
@@ -136,6 +136,7 @@ VE.fabric.prototype = {
         } else {
           this.canvas.remove(this.canvas.getActiveObject());
         }
+
         this.update();
     },
 
@@ -145,7 +146,6 @@ VE.fabric.prototype = {
 
         var requestImg = new fabric.Image.fromURL(this.url, function(loadedImg) {
             alert('Image Loaded!');
-
             // config
             loadedImg.set({
                 left: 0,
@@ -153,21 +153,12 @@ VE.fabric.prototype = {
                 height: scope.canvas.getHeight(),
                 width: scope.canvas.getWidth()
             });
-
-            // if (!scope.canvas.contains(scope.group)) {
-                // scope.group.addWithUpdate(loadedImg);
-            // } else {
-
-                scope.group.addWithUpdate(loadedImg);
-
-                scope.textArr.map(function(el){
-                    scope.canvas.bringToFront(el.textbox);
-                });
-
-                scope.removeOverlay();
             
-            // }
-
+            scope.group.addWithUpdate(loadedImg);
+            scope.textArr.map(function(el){
+                scope.canvas.bringToFront(el.textbox);
+            });
+            // scope.removeOverlay();
             scope.canvas.renderAll();
             
         } , { crossOrigin: 'Anonymous' });

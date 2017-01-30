@@ -16,9 +16,11 @@ VE.TextBoxController.prototype = {
 		$('#btnadd').on('click', function(){
 			var text = $(this).parent().find('input[type="text"]').val();
 			
-			var fontSize = $(this).parent().find('input[type="number"]').val();
+			var fontSize = $('#fontSize').val();
 
-			alert(fontSize)
+			var lineHeight = $('#lineHeight').val();
+
+			var color = $('#font-option').val();
 
 			var fonts = $('#fonts option:selected').val();
 			
@@ -32,13 +34,16 @@ VE.TextBoxController.prototype = {
 				'<button class="btn-delete">Delete</button></li>'
 			);
 			
-			ul.find('li').last().attr('id', scope.fabric.getTextboxId( (scope.idCtr++), fonts, +fontSize, text ) );
+			ul.find('li').last().attr('id', scope.fabric.getTextboxId( (scope.idCtr++), fonts, +fontSize, color, lineHeight, text ) );
 		});
 
 		ul.on('click', 'li > button',function(){
 			var li = $(this).parent();
 			var li_id = li.attr('id');
+			
 			scope.fabric.canvas.getItemByMyID( +li_id ).remove();
+			
+			scope.fabric.update();
 			li.remove();
 		});
 	},
